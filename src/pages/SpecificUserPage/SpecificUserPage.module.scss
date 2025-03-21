@@ -1,0 +1,186 @@
+$primary-color: #7a7464;
+$hover-color: #9f937a;
+$error-color: red;
+$bg-color: #f5f5f5;
+$border-color: #ccc;
+$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: $bg-color;
+  min-height: 100vh;
+}
+
+.profile {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.username {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.followButton {
+  background: $primary-color;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: $hover-color;
+  }
+
+  &.unfollow {
+    background: #d9534f;
+
+    &:hover {
+      background: #c9302c;
+    }
+  }
+}
+
+.followersList {
+  margin-top: 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.followerItem {
+  font-size: 14px;
+  color: #333;
+  background: #eee;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.posts {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+  max-width: 600px;
+  width: 100%;
+}
+
+.postsTitle {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+.postList {
+  list-style: none;
+  padding: 0;
+}
+
+.postItem {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: $box-shadow;
+}
+
+.postTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.postImage {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.postText {
+  font-size: 14px;
+  color: #555;
+}
+
+.noPosts {
+  font-size: 14px;
+  color: $error-color;
+  text-align: center;
+}
+
+.showAllBtn {
+  background: none;
+  border: none;
+  color: $primary-color;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 5px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+  text-align: center;
+  max-width: 300px;
+  width: 100%;
+}
+
+.fullFollowersList {
+  list-style: none;
+  padding: 0;
+}
+
+.closeModal {
+  background: $error-color;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+
+  &:hover {
+    background: darken($error-color, 10%);
+  }
+}

@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap");
+
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Rubik", sans-serif;
+}
+
+.userList {
+  margin: 0;
+  padding: 20px;
+}
+
+.chatWrapper {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: #ac9c7a;
+  color: white;
+}
+
+.user {
+  padding: 20px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-family: "Rubik", sans-serif;
+
+  &:hover {
+    background: #6b5243;
+  }
+}
+
+.activeUser {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.chatContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-position: center;
+  background: url("https://i.pinimg.com/736x/0b/f2/80/0bf280388937448d38392b76c15bd441.jpg"),
+    repeat;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+}
+
+.myMessage,
+.theirMessage {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 10px;
+  width: auto;
+  max-width: 80%;
+  min-width: 100px;
+  word-break: break-word;
+  white-space: pre-wrap;
+  font-family: "Rubik", sans-serif;
+}
+
+.myMessage {
+  align-self: flex-end;
+  background: #654027;
+  color: white;
+}
+
+.theirMessage {
+  align-self: flex-start;
+  background: #6a593e;
+  color: white;
+}
+
+.inputContainer {
+  display: flex;
+}
+
+.messageInput {
+  flex: 1;
+  padding: 20px 10px;
+  border: 1px solid #bdc3c7;
+  background: #dad5cf;
+  font-family: "Rubik", sans-serif;
+}
+
+.sendBtn {
+  background: #ac9c7a;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.1s;
+  font-family: "Rubik", sans-serif;
+}
+.sendBtn:hover {
+  background: #c9ba9b;
+}
+
+.connectBtn {
+  padding: 10px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-family: "Rubik", sans-serif;
+}
+
+.timestamp {
+  color: #e0cfa7;
+  font-size: 12px;
+  text-align: end;
+  width: 100%;
+}
+
+.username {
+  padding: 0;
+  margin: 0;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: "Rubik", sans-serif;
+}
+
+.msg {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+  color: #f8f2e7;
+  word-break: break-word;
+  white-space: pre-wrap;
+  font-family: "Rubik", sans-serif;
+}
+
+.dateSeparator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  color: #7c6d4b;
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  font-family: "Rubik", sans-serif;
+}
+
+.dateSeparator::before,
+.dateSeparator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #d3d3d3;
+  margin: 0 10px;
+}
+
+.scrollToBottomBtn {
+  position: fixed;
+  bottom: 80px;
+  width: 5%;
+  right: 40px;
+  font-size: 24px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: opacity 0.3s;
+  font-family: "Rubik", sans-serif;
+}
+.scrollToBottomBtn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}

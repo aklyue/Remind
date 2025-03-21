@@ -1,0 +1,86 @@
+.settingsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.settingsForm {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.input,
+.textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #7a7464;
+  outline: none;
+}
+
+.textarea {
+  resize: none;
+  height: 100px;
+}
+
+.fileInput {
+  padding: 5px;
+}
+
+.avatarPreview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-top: 10px;
+  border: 2px solid #ddd;
+}
+
+.saveButton {
+  background: #7a7464;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.saveButton:hover {
+  background: #9f937a;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}

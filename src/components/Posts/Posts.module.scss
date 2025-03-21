@@ -1,0 +1,220 @@
+$primary-color: #7a7464;
+$hover-color: #9f937a;
+$error-color: red;
+$bg-color: #f5f5f5;
+$border-color: #ccc;
+$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+.postsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: $bg-color;
+  min-height: 100vh;
+}
+
+.btnCreate {
+  text-decoration: none;
+  margin-bottom: 20px;
+
+  .addPostButton {
+    background: $primary-color;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background: $hover-color;
+    }
+  }
+}
+
+.postsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.postItem {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+}
+
+.postAuthor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.authorLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  gap: 10px;
+}
+
+.authorAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.postTime {
+  font-size: 12px;
+  color: $border-color;
+}
+
+.postLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.postImage {
+  width: 100%;
+  border-radius: 5px;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.postTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.likeSection {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin: 10px 0;
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+}
+
+.commentsSection {
+  margin-top: 10px;
+}
+
+.addCommentBtn {
+  background: none;
+  border: none;
+  color: $primary-color;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.toggleCommentsButton {
+  background: none;
+  border: none;
+  color: $primary-color;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 5px;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.commentTime {
+  font-size: 12px;
+  color: $border-color;
+  margin-left: 5px;
+}
+
+input {
+  padding: 8px;
+  width: calc(100% - 20px);
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  margin-top: 5px;
+  transition: 0.2s;
+
+  &:focus {
+    border-color: $primary-color;
+    outline: none;
+  }
+}
+
+button {
+  padding: 8px 12px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 5px;
+  background: $primary-color;
+  color: #333;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: $hover-color;
+    color: #fff;
+  }
+}
+
+p {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+.commentText {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+}
+
+.sendBtn {
+  padding: 8px 12px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 5px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: $hover-color;
+    color: #fff;
+  }
+}

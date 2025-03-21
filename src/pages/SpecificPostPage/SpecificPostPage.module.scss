@@ -1,0 +1,47 @@
+$primary-color: #7a7464;
+$hover-color: #9f937a;
+$error-color: red;
+$bg-color: #f5f5f5;
+$border-color: #ccc;
+$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background-color: $bg-color;
+}
+
+.post {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.image {
+  max-width: 100%;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.text {
+  font-size: 16px;
+  color: #333;
+}
+
+.notFound {
+  font-size: 18px;
+  color: $error-color;
+}
