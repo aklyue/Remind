@@ -1,37 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useFetchPosts from "../../hooks/useFetchPosts/useFetchPosts";
-
 import PostItem from "./PostItem";
 import c from "./Posts.module.scss";
+import SortPanel from "./SortPanel";
 
 const Posts = () => {
   const allPosts = useSelector((state) => state.posts);
   const { users, fetchPosts } = useFetchPosts();
+  const [sortBy, setSortBy] = useState("newest");
+
+  const sortedPosts = [...allPosts].sort((a, b) => {
+    if (sortBy === "newest") {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    } else if (sortBy === "likes") {
+      return b.likes.length - a.likes.length;
+    } else if (sortBy === "oldest") {
+      return new Date(a.createdAt) - new Date(b.createdAt);
+    }
+    return 0;
+  });
 
   return (
-    <div className={c.postsWrapper}>
-      <Link className={c.btnCreate} to="/create-post">
-        <button className={c.addPostButton}>Add new post</button>
-      </Link>
+    <div>
+      <div className={c.postsWrapper}>
+        <div className={c.controls}>
+          <Link className={c.btnCreate} to="/create-post">
+            <button className={c.addPostButton}>Add new post</button>
+          </Link>
+        </div>
 
-      <div className={c.postsContainer}>
-        {allPosts.length > 0 ? (
-          allPosts
-            .slice()
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            .map((post) => <PostItem key={post.id} post={post} users={users} fetchPosts={fetchPosts} />)
-        ) : (
-          <p>No posts available</p>
-        )}
+        <div className={c.postsContainer}>
+          {sortedPosts.length > 0 ? (
+            sortedPosts.map((post) => (
+              <PostItem
+                key={post.id}
+                post={post}
+                users={users}
+                fetchPosts={fetchPosts}
+              />
+            ))
+          ) : (
+            <p>No posts available</p>
+          )}
+        </div>
       </div>
+      <SortPanel sortBy={sortBy} setSortBy={setSortBy}/>
     </div>
   );
 };
 
 export default Posts;
-
 
 {
   /* {users.filter(user => user.id !== Number(loggedInUserId))

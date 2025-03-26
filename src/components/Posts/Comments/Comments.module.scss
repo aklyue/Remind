@@ -2,7 +2,7 @@
 
 .commentsSection {
   padding: 20px;
-  background-color: $bg-color;
+  background-color: #fff;
 }
 
 .commentsSection ul {
@@ -11,7 +11,7 @@
 }
 
 .commentsSection li {
-  background: #f9f9f9;
+  background: $bg-color;
   padding: 10px;
   border-radius: 5px;
   margin-top: 5px;
