@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  height: 15hv;
   padding: 10px 20px;
   background-color: #fff;
   border-bottom: 1px solid #dcdcdc;
@@ -14,8 +14,8 @@
   align-items: center;
 }
 
-.link{
-    text-decoration: none;
+.link {
+  text-decoration: none;
 }
 
 .img {
@@ -36,7 +36,8 @@
   text-decoration: none;
 }
 
-.info p, a {
+.info p,
+a {
   margin: 0;
   font-size: 16px;
   color: #333;
@@ -51,6 +52,7 @@
 .sideInfo {
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
 .logout {
@@ -58,8 +60,50 @@
   color: #be5252;
   font-size: 16px;
   transition: color 0.2s ease;
+  display: flex;
+
+  svg {
+    fill: #be5252;
+    transition: all 0.2s;
+  }
 }
 
-.logout:hover {
+.link {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+
+  svg {
+    fill: #333;
+    transition: all 0.2s;
+  }
+}
+
+.link:hover svg {
+  fill: #8e764f;
+}
+
+.strokeLink{
+  display: flex;
+  gap: 3px;
+  align-items: center;
+
+  path{
+    transition: all 0.2s;
+  }
+}
+
+.strokeLink:hover path {
+  stroke: #8e764f;
+}
+
+.logout:hover,
+.logout:hover svg {
   color: #e08888;
+  fill: #e08888;
+}
+
+.notificationsContainer{
+  display: flex;
+  align-items: center;
 }

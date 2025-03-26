@@ -9,6 +9,7 @@ body{
   gap: 10px;
   background-color: #f5f5f5;
   height: 100%;
+  border-top-right-radius: 20px;
   overflow-y: scroll;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -67,8 +68,8 @@ body{
 
 .scrollButton {
     position: fixed;
-    bottom: 70px;
-    right: 40px;
+    bottom: 17%;
+    right: 3%;
     padding: 10px 15px;
     background-color: #00000080;
     color: white;

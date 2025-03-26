@@ -14,8 +14,9 @@ const Comments = ({
 }) => {
   return (
     <div className={c.commentsSection} data-no-navigate>
-      {post.comments.length > 0 && (
+      {post.comments.length > 0 ? (
         <>
+          <p>Комментарии</p>
           <ul>
             {post.comments
               .slice(0, expandedPosts[post.id] ? post.comments.length : 5)
@@ -34,7 +35,20 @@ const Comments = ({
                       </Link>
                       {comment.text}
                       <div className={c.commentTime}>
-                        {new Date(comment.createdAt).toLocaleString("ru-RU")}
+                        {new Date(comment.createdAt).toLocaleString("ru-RU", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        }) +
+                          ", " +
+                          new Date(comment.createdAt).toLocaleTimeString(
+                            "ru-RU",
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: false,
+                            }
+                          )}
                       </div>
                     </div>
                   </div>
@@ -51,6 +65,8 @@ const Comments = ({
             </button>
           )}
         </>
+      ) : (
+        <p>Комментариев нет</p>
       )}
 
       {commentPostId === post.id ? (

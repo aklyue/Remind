@@ -100,7 +100,6 @@ const PostItem = ({ post, users, fetchPosts }) => {
       </div>
 
       <hr color="#f5f5f5" />
-      <p>Комментарии</p>
       <Comments
         post={post}
         toggleComments={toggleComments}
