@@ -43,17 +43,15 @@ function SpecificUserPage() {
       let updatedFollowed = [...(currentUser.followed || [])];
 
       if (isFollowing) {
-        // Удаляем подписку
         updatedFollowers = updatedFollowers.filter(
           (f) => f.id !== currentUserId
         );
         updatedFollowed = updatedFollowed.filter((f) => f.id !== userId);
       } else {
-        // Проверяем, есть ли уже подписка
         const alreadyFollowing = updatedFollowers.some(
-          (f) => f.id === currentUserId
+          (f) => f.id == currentUserId
         );
-        const alreadyFollowed = updatedFollowed.some((f) => f.id === userId);
+        const alreadyFollowed = updatedFollowed.some((f) => f.id == userId);
 
         if (!alreadyFollowing) {
           updatedFollowers.push({
@@ -67,7 +65,6 @@ function SpecificUserPage() {
         }
       }
 
-      // Обновляем данные у обоих пользователей
       const updateUser = fetch(`http://localhost:3001/users/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -138,13 +135,39 @@ function SpecificUserPage() {
             {user.posts.map((post) => (
               <li key={post.id} className={c.postItem}>
                 <h3 className={c.postTitle}>{post.title}</h3>
-                {post.image && (
-                  <img
-                    className={c.postImage}
-                    src={post.image}
-                    alt={post.title}
-                  />
-                )}
+
+                <div
+                  className={`${c.postImagesContainer} ${
+                    post.image || post.images?.length === 1
+                      ? c.single
+                      : post.images?.length === 2
+                      ? c.double
+                      : post.images?.length > 2
+                      ? c.multiple
+                      : ""
+                  }`}
+                  style={{ "--span-count": post.images?.length || 1 }}
+                >
+                  {post.images?.length > 0 ? (
+                    post.images.map((image, index) => (
+                      <img
+                        key={index}
+                        className={c.postImage}
+                        src={image}
+                        alt={`Post ${index}`}
+                      />
+                    ))
+                  ) : post.image ? (
+                    <img
+                      src={post.image}
+                      className={c.postImage}
+                      alt={post.title}
+                    />
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
+
                 <p className={c.postText}>{post.text}</p>
               </li>
             ))}

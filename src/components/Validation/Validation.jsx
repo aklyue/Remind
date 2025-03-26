@@ -277,7 +277,7 @@ function Validation() {
                 </div>
 
                 <div className={styles.checkboxGroup}>
-                    <input type="checkbox" checked={checkboxActive} onChange={(e) => setCheckboxActive(e.target.checked)} name="agreement" />
+                    <input type="checkbox" className={styles.checkBox} checked={checkboxActive} onChange={(e) => setCheckboxActive(e.target.checked)} name="agreement" />
                     <span>I accept the terms and privacy policy</span>
                 </div>
 
