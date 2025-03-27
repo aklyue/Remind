@@ -10,7 +10,7 @@ function App() {
   const socket = useWebSocket(userId)
   useEffect(() => {
     if (socket.current) {
-      console.log("WebSocket подключен", socket.current);
+      console.log("WebSocket подключен");
     }
   }, [socket]);
   return (

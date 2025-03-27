@@ -40,6 +40,7 @@ function Header() {
   }, [navigate]);
 
   function handleLogOut() {
+    localStorage.removeItem("token");
     localStorage.removeItem("userId");
     navigate(`/authorization`);
   }

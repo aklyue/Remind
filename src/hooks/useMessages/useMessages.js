@@ -11,10 +11,18 @@ export default function useMessages(userId, recipientId) {
   const [isAtBottom, setIsAtBottom] = useState(true);
   const unreadMessages = useSelector((state) => state.unreadMessages);
 
+  const token = localStorage.getItem("token");
+
+  const isAuthenticated = token ? true : false;
+
   async function fetchMessages() {
-    if (!recipientId) return;
+    if (!recipientId || !isAuthenticated) return;
     try {
-      const res = await fetch(`http://localhost:3001/users/${userId}`);
+      const res = await fetch(`http://localhost:3001/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const user = await res.json();
       const chatMessages =
         user.messages?.filter(
@@ -35,7 +43,7 @@ export default function useMessages(userId, recipientId) {
             messagesContainerRef.current;
           setIsAtBottom(scrollTop + clientHeight >= scrollHeight - 20);
         }
-      }, 0);
+      }, 50);
     } catch (error) {
       console.error("Ошибка загрузки сообщений:", error);
     }
@@ -74,8 +82,8 @@ export default function useMessages(userId, recipientId) {
   }, [socket, recipientId, userId, isAtBottom, dispatch]);
 
   useEffect(() => {
-    fetchMessages()
-  }, [recipientId])
+    fetchMessages();
+  }, [recipientId]);
 
   useEffect(() => {
     if (recipientId) {
@@ -103,11 +111,21 @@ export default function useMessages(userId, recipientId) {
   };
 
   async function saveMessageToDB(message) {
+    if (!isAuthenticated) return;
     try {
-      const senderRes = await fetch(`http://localhost:3001/users/${userId}`);
+      const senderRes = await fetch(`http://localhost:3001/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const sender = await senderRes.json();
       const recipientRes = await fetch(
-        `http://localhost:3001/users/${recipientId}`
+        `http://localhost:3001/users/${recipientId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const recipient = await recipientRes.json();
 
@@ -117,12 +135,18 @@ export default function useMessages(userId, recipientId) {
       await Promise.all([
         fetch(`http://localhost:3001/users/${userId}`, {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify(sender),
         }),
         fetch(`http://localhost:3001/users/${recipientId}`, {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify(recipient),
         }),
       ]);
@@ -135,7 +159,7 @@ export default function useMessages(userId, recipientId) {
     if (!messagesContainerRef.current) return;
     const { scrollTop, scrollHeight, clientHeight } =
       messagesContainerRef.current;
-    setIsAtBottom(scrollTop + clientHeight >= scrollHeight - 140);
+    setIsAtBottom(scrollTop + clientHeight >= scrollHeight - 20);
   };
 
   useEffect(() => {
@@ -146,7 +170,7 @@ export default function useMessages(userId, recipientId) {
         container.removeEventListener("scroll", handleScroll);
       };
     }
-  }, []);
+  }, [recipientId]);
 
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {

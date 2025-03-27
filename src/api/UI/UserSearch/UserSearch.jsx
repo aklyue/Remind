@@ -45,8 +45,8 @@ function UserSearch() {
       {isDropdownVisible && filteredUsers.length > 0 && (
         <ul className={c.dropdown}>
           {filteredUsers.map((user) => (
-            <Link key={user.id}>
-              <li className={c.dropdownItem} to={`/users/${user.id}`}>
+            <Link key={user.id} to={`/users/${user.id}`}>
+              <li className={c.dropdownItem}>
                 <img
                   src={user.avatar}
                   alt={user.username}
