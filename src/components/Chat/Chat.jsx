@@ -35,13 +35,31 @@ function Chat() {
 
     handleNavigation();
 
-    return () => {
-    };
+    return () => {};
   }, [location.pathname]);
+
+  if (!currentUser) {
+    return <div>Загрузка...</div>;
+  }
 
   return (
     <div className={c.chat}>
       <div className={c.sidebar}>
+        {currentUser && (
+          <div>
+            <h3>Сохраненные</h3>
+            <UserListItem
+              user={currentUser}
+              unreadMessages={unreadMessages}
+              onClick={() => {
+                setRecipientId(currentUser.id);
+                navigate("/chat", {
+                  state: { recipient: currentUser },
+                });
+              }}
+            />
+          </div>
+        )}
         {sortedUsers.length > 0 && <h3>Друзья</h3>}
         {sortedUsers.map((user) => (
           <UserListItem

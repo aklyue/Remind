@@ -55,7 +55,6 @@ function Settings() {
   }, [navigate]);
 
   const submitHandler = async (e) => {
-    e.preventDefault();
     if (formValid) {
       const userId = localStorage.getItem("userId");
 

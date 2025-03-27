@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
 import useGetUsers from "../../hooks/query/useGetUsers";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import c from "./SpecificUserPage.module.scss";
 
 function SpecificUserPage() {
   const { userId } = useParams();
-  const { data: user, isFetching } = useGetUsers(userId);
+  const { data: user, isFetching, refetch } = useGetUsers(userId);
   const currentUserId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
   const [currentUser, setCurrentUser] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const [showAllFollowers, setShowAllFollowers] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!token) {
+      navigate("/authorization");
+    }
     const fetchCurrentUser = async () => {
-      const res = await fetch(`http://localhost:3001/users/${currentUserId}`);
+      const res = await fetch(`http://localhost:3001/users/${currentUserId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const data = await res.json();
       setCurrentUser(data);
     };
@@ -67,7 +74,10 @@ function SpecificUserPage() {
 
       const updateUser = fetch(`http://localhost:3001/users/${userId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ ...user, followers: updatedFollowers }),
       });
 
@@ -75,10 +85,14 @@ function SpecificUserPage() {
         `http://localhost:3001/users/${currentUserId}`,
         {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({ ...currentUser, followed: updatedFollowed }),
         }
       );
+      refetch();
 
       await Promise.all([updateUser, updateCurrentUser]);
 
