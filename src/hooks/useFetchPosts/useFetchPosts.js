@@ -5,16 +5,18 @@ import { getUsers } from "../../api/users";
 import { useNavigate } from "react-router-dom";
 
 export default function useFetchPosts() {
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token")
 
   const fetchPosts = async () => {
     const data = await getUsers();
     setUsers(data);
 
-    if (!userId) {
+    if (!token) {
       navigate("/authorization");
       return;
     }

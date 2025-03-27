@@ -13,9 +13,28 @@ app.use(
 );
 app.use(express.json());
 
+
 const PORT = process.env.PORT;
 const WS_PORT = process.env.WS_PORT;
-const API_URL = process.env.API_URL
+const API_URL = process.env.API_URL;
+const SECRET_KEY = process.env.SECRET_KEY;
+
+app.use((req, res, next) => {
+  console.log("SECRET_KEY:", SECRET_KEY);
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, SECRET_KEY);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
@@ -111,16 +130,6 @@ const authMiddleware = (req, res, next) => {
     return res.status(401).json({ message: "Invalid token" });
   }
 };
-
-app.get("/me", authMiddleware, async (req, res) => {
-  const response = await fetch(API_URL);
-  const users = await response.json();
-  const user = users.find((user) => user.id === req.user.id);
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-  res.json(user);
-});
 
 wss.on("connection", (ws) => {
   ws.on("message", (message) => {

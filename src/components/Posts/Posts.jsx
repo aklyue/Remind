@@ -46,7 +46,7 @@ const Posts = () => {
           )}
         </div>
       </div>
-      <SortPanel sortBy={sortBy} setSortBy={setSortBy}/>
+      <SortPanel sortBy={sortBy} setSortBy={setSortBy} />
     </div>
   );
 };
