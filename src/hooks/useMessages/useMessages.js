@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { incrementUnread, resetUnread } from "../../store/unreadMessagesSlice";
 import useWebSocket from "../useWebSocket/useWebSocket";
+import { useNavigate } from "react-router-dom";
 
 export default function useMessages(userId, recipientId) {
   const dispatch = useDispatch();
@@ -10,13 +11,16 @@ export default function useMessages(userId, recipientId) {
   const [messages, setMessages] = useState([]);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const unreadMessages = useSelector((state) => state.unreadMessages);
+  const navigate = useNavigate()
 
   const token = localStorage.getItem("token");
 
   const isAuthenticated = token ? true : false;
 
   async function fetchMessages() {
-    if (!recipientId || !isAuthenticated) return;
+    if (!recipientId || !isAuthenticated) {
+      navigate("/authorization")
+    };
     try {
       const res = await fetch(`http://localhost:3001/users/${userId}`, {
         headers: {

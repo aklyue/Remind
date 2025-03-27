@@ -7,8 +7,14 @@ function Friends() {
   const navigate = useNavigate();
   const [friends, setFriends] = useState([]);
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token")
   useEffect(() => {
     const fetchFriends = async () => {
+
+      if(!token){
+        navigate("/authorization")
+      }
+
       try {
         const users = await getUsers();
         console.log(users);
