@@ -1,10 +1,13 @@
-import React from 'react'
-import CreatePost from '../../components/CreatePost'
+import React from "react";
+import CreatePost from "../../components/CreatePost";
+import c from "./CreatePostPage.module.scss"
 
 function CreatePostPage() {
   return (
-    <CreatePost/>
-  )
+    <div className={c.container}>
+      <CreatePost />
+    </div>
+  );
 }
 
-export default CreatePostPage
+export default CreatePostPage;

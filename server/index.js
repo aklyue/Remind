@@ -5,22 +5,33 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
+// const { Pool } = require("pg");
+
+// const pool = new Pool({
+//   user: process.env.DB_USER,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASS,
+//   port: process.env.DB_PORT,
+// });
+
 const app = express();
+
+const { PORT, WS_PORT, SECRET_KEY, API_URL } = process.env;
+if (!SECRET_KEY) {
+  console.error("SECRET_KEY is not defined in .env file");
+  process.exit(1);
+}
+
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "http://localhost:3001"],
+    credentials: true,
   })
 );
 app.use(express.json());
 
-
-const PORT = process.env.PORT;
-const WS_PORT = process.env.WS_PORT;
-const API_URL = process.env.API_URL;
-const SECRET_KEY = process.env.SECRET_KEY;
-
-app.use((req, res, next) => {
-  console.log("SECRET_KEY:", SECRET_KEY);
+const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
@@ -33,6 +44,65 @@ app.use((req, res, next) => {
     next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid token" });
+  }
+};
+
+async function fetchUserFromDB(userId) {
+  const response = await fetch(`http://localhost:3001/users/${userId}`);
+  if (!response.ok) {
+    throw new Error("User not found");
+  }
+  return await response.json();
+}
+
+async function fetchUsers() {
+  const response = await fetch(`http://localhost:3001/users`);
+  if (!response.ok) {
+    throw new Error("Users not found");
+  }
+  return await response.json();
+}
+
+app.get("/users/:userId", authMiddleware, async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await fetchUserFromDB(userId);
+    res.json(user);
+  } catch (error) {
+    return res.status(404).json({ message: "User not found" });
+  }
+});
+
+app.put("/users/:userId", authMiddleware, async (req, res) => {
+  const { userId } = req.params;
+  const updatedUserData = req.body;
+
+  try {
+    const response = await fetch(`http://localhost:3001/users/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedUserData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update user data");
+    }
+
+    res.status(200).json(updatedUserData);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+app.get(`/users`, authMiddleware, async (req, res) => {
+  try {
+    const users = await fetchUsers();
+    res.json(users);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 });
 
@@ -114,22 +184,6 @@ app.post("/login", async (req, res) => {
 
   res.json({ token, user });
 });
-
-const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-
-  try {
-    const decoded = jwt.verify(token, SECRET_KEY);
-    req.user = decoded;
-    next();
-  } catch (error) {
-    return res.status(401).json({ message: "Invalid token" });
-  }
-};
 
 wss.on("connection", (ws) => {
   ws.on("message", (message) => {

@@ -117,7 +117,7 @@ function Header() {
           </Link>
         </div>
       </div>
-      <UserSearch/>
+      <UserSearch />
       <div className={c.sideInfo}>
         <div className={c.notificationsContainer}>
           {totalUnread > 0 ? (

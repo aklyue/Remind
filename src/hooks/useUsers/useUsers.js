@@ -23,8 +23,8 @@ export function useUsers(userId) {
 
         const mutualFriends = allUsers.filter(
           (user) =>
-            curUser.followed?.some((f) => (f.id || f) === user.id) &&
-            user.followers?.some((f) => (f.id || f) === userId)
+            curUser.followed.some((f) => (f.id || f) == user.id) &&
+            user.followed.some((f) => (f.id || f) == userId)
         );
 
         setSortedUsers(mutualFriends);

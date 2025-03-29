@@ -28,6 +28,7 @@ export default function MessageList({
   scrollToBottom,
   isAtBottom,
   messagesContainerRef,
+  setIsAtBottom,
 }) {
   const groupedMessages = groupMessagesByDay(messages);
 
@@ -35,7 +36,30 @@ export default function MessageList({
     if (isAtBottom) {
       scrollToBottom();
     }
-  }, [isAtBottom, scrollToBottom]);
+  }, [isAtBottom, messages]);
+
+  useEffect(() => {
+    if (!messagesContainerRef.current) return;
+
+    let animationFrameId;
+
+    const handleScroll = () => {
+      animationFrameId = requestAnimationFrame(() => {
+        const { scrollTop, scrollHeight, clientHeight } =
+          messagesContainerRef.current;
+        setIsAtBottom(scrollTop + clientHeight >= scrollHeight - 20);
+      });
+    };
+
+    const container = messagesContainerRef.current;
+    container.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [messagesContainerRef]);
 
   return (
     <div className={c.messages} ref={messagesContainerRef}>
@@ -51,9 +75,7 @@ export default function MessageList({
                 <span className={c.username}>{msg.username || "Аноним"}</span>
               </div>
               <div className={c.text}>{msg.message}</div>
-              <span className={c.timestamp}>
-                {formatTime(msg.timestamp)}
-              </span>
+              <span className={c.timestamp}>{formatTime(msg.timestamp)}</span>
             </div>
           ))}
         </div>

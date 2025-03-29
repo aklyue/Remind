@@ -9,7 +9,7 @@ function Authorization() {
   const { email, emailError, emailHandler } = useEmail("");
   const { password, passwordError, passwordHandler } = usePassword("");
   const { fieldsDirty, blurHandler } = useBlurHandler();
-
+  const token = localStorage.getItem("token");
   const [formValid, setFormValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
@@ -69,42 +69,44 @@ function Authorization() {
   return (
     <div className={styles.authWrapper}>
       <form className={styles.authForm} onSubmit={submitHandler}>
-        <h1 className={styles.authTitle}>Authorization</h1>
-        {fieldsDirty.email && emailError && (
-          <div className={styles.error}>{emailError}</div>
-        )}
-        <div className={styles.inputGroup}>
-          <label className={styles.label} htmlFor="email">
-            Email
-          </label>
-          <input
-            className={styles.input}
-            onChange={emailHandler}
-            value={email}
-            onBlur={blurHandler}
-            type="text"
-            placeholder="Your email"
-            name="email"
-          />
+        <div className={styles.inputFlex}>
+          <h1 className={styles.authTitle}>Authorization</h1>
+          {fieldsDirty.email && emailError && (
+            <div className={styles.error}>{emailError}</div>
+          )}
+          <div className={styles.inputGroup}>
+            <label className={styles.label} htmlFor="email">
+              Email
+            </label>
+            <input
+              className={styles.input}
+              onChange={emailHandler}
+              value={email}
+              onBlur={blurHandler}
+              type="text"
+              placeholder="Your email"
+              name="email"
+            />
+          </div>
+          {fieldsDirty.password && passwordError && (
+            <div className={styles.error}>{passwordError}</div>
+          )}
+          <div className={styles.inputGroup}>
+            <label className={styles.label} htmlFor="password">
+              Password
+            </label>
+            <input
+              className={styles.input}
+              onChange={passwordHandler}
+              value={password}
+              onBlur={blurHandler}
+              type="password"
+              placeholder="Password"
+              name="password"
+            />
+          </div>
+          {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         </div>
-        {fieldsDirty.password && passwordError && (
-          <div className={styles.error}>{passwordError}</div>
-        )}
-        <div className={styles.inputGroup}>
-          <label className={styles.label} htmlFor="password">
-            Password
-          </label>
-          <input
-            className={styles.input}
-            onChange={passwordHandler}
-            value={password}
-            onBlur={blurHandler}
-            type="password"
-            placeholder="Password"
-            name="password"
-          />
-        </div>
-        {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         <button
           className={styles.authButton}
           disabled={!formValid}

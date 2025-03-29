@@ -1,4 +1,4 @@
-const endPoint = "http://localhost:3001";
+const endPoint = "http://localhost:4000";
 
 export const getUsers = async () => {
   const token = localStorage.getItem("token");

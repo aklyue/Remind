@@ -25,6 +25,7 @@ function Chat() {
     messagesContainerRef,
     scrollToBottom,
     isAtBottom,
+    setIsAtBottom,
   } = useMessages(userId, recipientId);
   useEffect(() => {
     const handleNavigation = () => {
@@ -94,6 +95,7 @@ function Chat() {
           className={c.messagesContainer}
           isAtBottom={isAtBottom}
           scrollToBottom={scrollToBottom}
+          setIsAtBottom={setIsAtBottom}
         />
 
         <ChatInput sendMessage={(msg) => sendMessage(msg, currentUser)} />

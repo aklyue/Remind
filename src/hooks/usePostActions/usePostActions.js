@@ -5,6 +5,7 @@ import { toggleLike } from "../../store/postsReducer";
 export default function usePostActions(users, fetchPosts) {
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
   const [commentText, setCommentText] = useState("");
   const [commentPostId, setCommentPostId] = useState(null);
   const [expandedPosts, setExpandedPosts] = useState({});
@@ -27,7 +28,12 @@ export default function usePostActions(users, fetchPosts) {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/users/${postOwner.id}`
+        `http://localhost:3001/users/${postOwner.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const userData = await response.json();
 
@@ -39,7 +45,7 @@ export default function usePostActions(users, fetchPosts) {
 
       await fetch(`http://localhost:3001/users/${postOwner.id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ posts: updatedPosts }),
       });
 
@@ -60,7 +66,11 @@ export default function usePostActions(users, fetchPosts) {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/users/${postOwner.id}`
+        `http://localhost:3001/users/${postOwner.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
       );
       const userData = await response.json();
 
@@ -79,7 +89,7 @@ export default function usePostActions(users, fetchPosts) {
 
       await fetch(`http://localhost:3001/users/${postOwner.id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ posts: updatedPosts }),
       });
 
