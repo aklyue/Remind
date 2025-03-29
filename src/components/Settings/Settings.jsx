@@ -16,6 +16,7 @@ function Settings() {
   const [description, setDescription] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [avatarFile, setAvatarFile] = useState(null);
+  const token = localStorage.getItem("token")
 
   useEffect(() => {
     if (emailError) {
@@ -28,12 +29,16 @@ function Settings() {
   useEffect(() => {
     const fetchData = async () => {
       const userId = localStorage.getItem("userId");
-      if (!userId) {
+      if (!userId || !token) {
         navigate("/authorization");
         return;
       }
       try {
-        const response = await fetch(`http://localhost:3001/users/${userId}`);
+        const response = await fetch(`http://localhost:4000/users/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
         if (response.status === 404) {
           navigate("/authorization");

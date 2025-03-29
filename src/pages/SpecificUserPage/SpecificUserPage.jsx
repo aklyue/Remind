@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useGetUsers from "../../hooks/query/useGetUsers";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import c from "./SpecificUserPage.module.scss";
 
 function SpecificUserPage() {
@@ -18,7 +18,7 @@ function SpecificUserPage() {
       navigate("/authorization");
     }
     const fetchCurrentUser = async () => {
-      const res = await fetch(`http://localhost:3001/users/${currentUserId}`, {
+      const res = await fetch(`http://localhost:4000/users/${currentUserId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -103,117 +103,133 @@ function SpecificUserPage() {
     }
   };
 
+  const handleUserNavigate = (follower) => {
+    navigate(`/users/${follower.id}`);
+  };
+
   return (
-    <div className={c.container}>
-      <div className={c.profile}>
-        <img className={c.avatar} src={user.avatar} alt="User Avatar" />
-        <p className={c.username}>{user.username}</p>
+    <div className={c.mainCont}>
+      <div className={c.container}>
+        <div className={c.profile}>
+          <img className={c.avatar} src={user.avatar} alt="User Avatar" />
+          <p className={c.username}>{user.username}</p>
 
-        {currentUserId !== userId && (
-          <button
-            className={`${c.followButton} ${isFollowing ? c.unfollow : ""}`}
-            onClick={handleFollow}
-          >
-            {isFollowing ? "Unfollow" : "Follow"}
-          </button>
-        )}
-
-        <h3>Followers:</h3>
-        <ul className={c.followersList}>
-          {user.followers && user.followers.length > 0 ? (
-            <>
-              {user.followers.slice(0, 3).map((follower) => (
-                <li key={follower.id} className={c.followerItem}>
-                  {follower.name}
-                </li>
-              ))}
-              {user.followers.length > 3 && (
-                <button
-                  className={c.showAllBtn}
-                  onClick={() => setShowAllFollowers(true)}
-                >
-                  Show all ({user.followers.length})
-                </button>
-              )}
-            </>
-          ) : (
-            <p>No followers yet</p>
+          {currentUserId !== userId && (
+            <button
+              className={`${c.followButton} ${isFollowing ? c.unfollow : ""}`}
+              onClick={handleFollow}
+            >
+              {isFollowing ? "Unfollow" : "Follow"}
+            </button>
           )}
-        </ul>
-      </div>
 
-      <div className={c.posts}>
-        <h2 className={c.postsTitle}>Posts:</h2>
-        {user.posts && user.posts.length > 0 ? (
-          <ul className={c.postList}>
-            {user.posts.map((post) => (
-              <li key={post.id} className={c.postItem}>
-                <h3 className={c.postTitle}>{post.title}</h3>
-
-                <div
-                  className={`${c.postImagesContainer} ${
-                    post.image || post.images?.length === 1
-                      ? c.single
-                      : post.images?.length === 2
-                      ? c.double
-                      : post.images?.length > 2
-                      ? c.multiple
-                      : ""
-                  }`}
-                  style={{ "--span-count": post.images?.length || 1 }}
-                >
-                  {post.images?.length > 0 ? (
-                    post.images.map((image, index) => (
-                      <img
-                        key={index}
-                        className={c.postImage}
-                        src={image}
-                        alt={`Post ${index}`}
-                      />
-                    ))
-                  ) : post.image ? (
-                    <img
-                      src={post.image}
-                      className={c.postImage}
-                      alt={post.title}
-                    />
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
-
-                <p className={c.postText}>{post.text}</p>
-              </li>
-            ))}
+          <h3>Followers:</h3>
+          <ul className={c.followersList}>
+            {user.followers && user.followers.length > 0 ? (
+              <>
+                {user.followers.slice(0, 3).map((follower) => (
+                  <li
+                    key={follower.id}
+                    className={c.followerItem}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleUserNavigate(follower)}
+                  >
+                    {follower.name}
+                  </li>
+                ))}
+                {user.followers.length > 3 && (
+                  <button
+                    className={c.showAllBtn}
+                    onClick={() => setShowAllFollowers(true)}
+                  >
+                    Show all ({user.followers.length})
+                  </button>
+                )}
+              </>
+            ) : (
+              <p>No followers yet</p>
+            )}
           </ul>
-        ) : (
-          <p className={c.noPosts}>No posts available</p>
-        )}
-      </div>
+        </div>
 
-      {showAllFollowers && (
-        <div
-          className={c.modalOverlay}
-          onClick={() => setShowAllFollowers(false)}
-        >
-          <div className={c.modal} onClick={(e) => e.stopPropagation()}>
-            <h3>All Followers</h3>
-            <ul className={c.fullFollowersList}>
-              {user.followers.map((follower) => (
-                <li key={follower.id} className={c.followerItem}>
-                  {follower.name}
+        <div className={c.posts}>
+          <h2 className={c.postsTitle}>Posts:</h2>
+          {user.posts && user.posts.length > 0 ? (
+            <ul className={c.postList}>
+              {user.posts.map((post) => (
+                <li key={post.id} className={c.postItem}>
+                  <h3 className={c.postTitle}>{post.title}</h3>
+
+                  <div
+                    className={`${c.postImagesContainer} ${
+                      post.image || post.images?.length === 1
+                        ? c.single
+                        : post.images?.length === 2
+                        ? c.double
+                        : post.images?.length > 2
+                        ? c.multiple
+                        : ""
+                    }`}
+                    style={{ "--span-count": post.images?.length || 1 }}
+                  >
+                    {post.images?.length > 0 ? (
+                      post.images.map((image, index) => (
+                        <img
+                          key={index}
+                          className={c.postImage}
+                          src={image}
+                          alt={`Post ${index}`}
+                        />
+                      ))
+                    ) : post.image ? (
+                      <img
+                        src={post.image}
+                        className={c.postImage}
+                        alt={post.title}
+                      />
+                    ) : (
+                      <div></div>
+                    )}
+                  </div>
+
+                  <p className={c.postText}>{post.text}</p>
                 </li>
               ))}
             </ul>
-            <button
-              className={c.closeModal}
-              onClick={() => setShowAllFollowers(false)}
-            >
-              Close
-            </button>
-          </div>
+          ) : (
+            <p className={c.noPosts}>No posts available</p>
+          )}
         </div>
-      )}
+
+        {showAllFollowers && (
+          <div
+            className={c.modalOverlay}
+            onClick={() => setShowAllFollowers(false)}
+          >
+            <div className={c.modal} onClick={(e) => e.stopPropagation()}>
+              <h3>All Followers</h3>
+              <ul className={c.fullFollowersList}>
+                {user.followers.map((follower) => (
+                  <li
+                    key={follower.id}
+                    className={c.followerItem}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleUserNavigate(follower)}
+                  >
+                    {follower.name}
+                  </li>
+                ))}
+              </ul>
+              <button
+                className={c.closeModal}
+                onClick={() => setShowAllFollowers(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

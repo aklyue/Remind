@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { incrementUnread, resetUnread } from "../../store/unreadMessagesSlice";
+import { resetUnread } from "../../store/unreadMessagesSlice";
 import useWebSocket from "../useWebSocket/useWebSocket";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,7 @@ export default function useMessages(userId, recipientId) {
   const [messages, setMessages] = useState([]);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const unreadMessages = useSelector((state) => state.unreadMessages);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
 
@@ -19,10 +19,10 @@ export default function useMessages(userId, recipientId) {
 
   async function fetchMessages() {
     if (!recipientId || !isAuthenticated) {
-      navigate("/authorization")
-    };
+      navigate("/authorization");
+    }
     try {
-      const res = await fetch(`http://localhost:3001/users/${userId}`, {
+      const res = await fetch(`http://localhost:4000/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -73,8 +73,8 @@ export default function useMessages(userId, recipientId) {
         if (isAtBottom) {
           setTimeout(scrollToBottom, 50);
         }
-      } else {
-        dispatch(incrementUnread({ senderId: message.senderId }));
+
+        dispatch(resetUnread({ senderId: recipientId }));
       }
     };
 
@@ -117,14 +117,14 @@ export default function useMessages(userId, recipientId) {
   async function saveMessageToDB(message) {
     if (!isAuthenticated) return;
     try {
-      const senderRes = await fetch(`http://localhost:3001/users/${userId}`, {
+      const senderRes = await fetch(`http://localhost:4000/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       const sender = await senderRes.json();
       const recipientRes = await fetch(
-        `http://localhost:3001/users/${recipientId}`,
+        `http://localhost:4000/users/${recipientId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -137,7 +137,7 @@ export default function useMessages(userId, recipientId) {
       recipient.messages = [...(recipient.messages || []), message];
 
       await Promise.all([
-        fetch(`http://localhost:3001/users/${userId}`, {
+        fetch(`http://localhost:4000/users/${userId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -145,7 +145,7 @@ export default function useMessages(userId, recipientId) {
           },
           body: JSON.stringify(sender),
         }),
-        fetch(`http://localhost:3001/users/${recipientId}`, {
+        fetch(`http://localhost:4000/users/${recipientId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -191,6 +191,7 @@ export default function useMessages(userId, recipientId) {
     messagesContainerRef,
     scrollToBottom,
     isAtBottom,
+    setIsAtBottom,
     unreadMessages,
   };
 }

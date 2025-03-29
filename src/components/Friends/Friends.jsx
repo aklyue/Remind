@@ -2,45 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getUsers } from "../../api/users";
 import c from "./Friends.module.scss";
+import { useUsers } from "../../hooks/useUsers/useUsers";
 
 function Friends() {
   const navigate = useNavigate();
   const [friends, setFriends] = useState([]);
   const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
+  const { sortedUsers } = useUsers(userId);
   useEffect(() => {
-    const fetchFriends = async () => {
+    if (!token) {
+      navigate("/authorization");
+    }
+  }, [token, navigate]);
 
-      if(!token){
-        navigate("/authorization")
-      }
-
-      try {
-        const users = await getUsers();
-        console.log(users);
-        const currentUser = users.find((user) => user.id === userId);
-
-        if (!currentUser || !Array.isArray(currentUser.followed)) return;
-
-        const mutualFriends = users.filter((user) => {
-          if (user.id == userId) return false;
-
-          const isFollowing = currentUser.followed.some(
-            (f) => (f.id || f) == user.id
-          );
-          const isFollowedBy = user.followers.some((f) => f.id || f == userId);
-
-          return isFollowing && isFollowedBy;
-        });
-
-        setFriends(mutualFriends);
-      } catch (error) {
-        console.error("Ошибка загрузки друзей:", error);
-      }
-    };
-
-    fetchFriends();
-  }, [userId]);
+  useEffect(() => {
+    setFriends(sortedUsers)
+  }, [sortedUsers])
 
   const goToChat = (friend) => {
     navigate("/chat", { state: { recipient: friend } });
