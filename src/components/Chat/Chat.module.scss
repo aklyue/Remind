@@ -8,8 +8,8 @@
 }
 
 .sidebar {
- border-top-left-radius: 20px;
- border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
   min-width: 280px;
   background-color: #f5f5f5;
   border-right: 1px solid #dcdcdc;
@@ -49,4 +49,84 @@ h3 {
   display: flex;
   height: 100hv;
   flex-direction: column;
+}
+
+@media (max-width: 1024px) {
+  .chat {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    min-width: 250px;
+    padding: 10px;
+  }
+
+  .chatWindow {
+    border-radius: 20px;
+    height: auto;
+  }
+
+  .messagesContainer {
+    height: calc(
+      100vh - 120px
+    );
+    padding-right: 5px;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    min-width: 200px;
+    padding: 8px;
+    border-radius: 0;
+  }
+
+  .chatWindow {
+    height: auto;
+    border-radius: 15px;
+  }
+
+  .messagesContainer {
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    min-width: 180px;
+    padding: 5px;
+    border-radius: 0;
+  }
+
+  .chatWindow {
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .messagesContainer {
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+}
+
+.backButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #a47e69;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.backButton:hover {
+  background-color: #d4b89a;
 }

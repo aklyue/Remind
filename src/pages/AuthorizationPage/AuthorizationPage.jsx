@@ -9,7 +9,7 @@ function AuthorizationPage() {
   return (
     <div className={styles.pageWrapper}>
       <div>
-        <svg
+        <svg className={styles.authSvg}
           xmlns="http://www.w3.org/2000/svg"
           width="250"
           height="250"

@@ -83,12 +83,12 @@ a {
   fill: #8e764f;
 }
 
-.strokeLink{
+.strokeLink {
   display: flex;
   gap: 3px;
   align-items: center;
 
-  path{
+  path {
     transition: all 0.2s;
   }
 }
@@ -103,7 +103,90 @@ a {
   fill: #e08888;
 }
 
-.notificationsContainer{
+.notificationsContainer {
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .header {
+    padding: 10px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .info {
+    gap: 10px;
+    align-items: center;
+  }
+
+  .info p,
+  a {
+    font-size: 14px;
+  }
+
+  .sideInfo {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: auto;
+    padding: 8px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .container {
+    flex-direction: row;
+  }
+
+  .avatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .info {
+    gap: 15px;
+    display: flex;
+    align-items: center;
+  }
+
+  .info p,
+  a {
+    font-size: 12px;
+  }
+
+  .sideInfo {
+    display: none;
+  }
+
+  .logout {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 5px;
+    flex-direction: column;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .info p,
+  a {
+    font-size: 10px;
+  }
+
+  .logout {
+    font-size: 12px;
+  }
 }

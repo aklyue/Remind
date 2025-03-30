@@ -90,3 +90,36 @@ $box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: not-allowed;
   }
 }
+
+@media (max-width:1024px) {
+    .authWrapper{
+      min-height: 0;
+      width: 100%;
+    }
+
+    .authForm{
+      width: 350px;
+    }
+}
+
+@media (max-width:768px) {
+  .authWrapper{
+    min-height: 0;
+    width: auto;
+    padding: 0;
+  }
+
+  .authForm{
+    width: 350px;
+  }
+}
+
+@media (max-width:480px) {
+  .authWrapper{
+    min-height: 0;
+  }
+
+  .authForm{
+    width: 250px;
+  }
+}

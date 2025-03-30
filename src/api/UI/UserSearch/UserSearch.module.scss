@@ -45,3 +45,54 @@
   border-radius: 50%;
   margin-right: 8px;
 }
+
+@media (max-width: 1024px) {
+  .searchInput {
+    width: 250px;
+  }
+
+  .dropdown {
+    max-height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .searchInput {
+    width: 100%;
+    font-size: 13px;
+    padding: 6px;
+  }
+
+  .dropdown {
+    width: 100%;
+    max-height: 150px;
+  }
+
+  .dropdownItem {
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .dropdownItem img {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchInput {
+    width: 300px;
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .dropdownItem {
+    padding: 5px;
+    font-size: 11px;
+  }
+
+  .dropdownItem img {
+    width: 22px;
+    height: 22px;
+  }
+}

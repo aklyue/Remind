@@ -14,21 +14,21 @@ $box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-position: center;
   background-repeat: no-repeat;
 
-  .logoText{
+  .logoText {
     display: flex;
     flex-direction: column;
     min-width: 350px;
-    .remind{
-        font-size: 80px;
-        font-weight: bold;
-        color: #43352d;
+    .remind {
+      font-size: 80px;
+      font-weight: bold;
+      color: #43352d;
     }
 
-    .messenger{
-        align-self: flex-end;
-        font-size: 40px;
-        font-weight: bold;
-        color: #7a7464;
+    .messenger {
+      align-self: flex-end;
+      font-size: 40px;
+      font-weight: bold;
+      color: #7a7464;
     }
   }
 }
@@ -74,4 +74,91 @@ $box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   height: 70%;
   width: 100%;
   box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .pageWrapper {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    .logoText {
+      min-width: 100%;
+      margin-bottom: 20px;
+      .remind {
+        font-size: 30px;
+      }
+      .messenger {
+        font-size: 30px;
+      }
+    }
+  }
+
+  .buttonGroup {
+    margin-bottom: 15px;
+  }
+
+  .formContainer {
+    max-width: 90%;
+    height: auto;
+  }
+
+  .authSvg {
+    width: 150px;
+    height: 170px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pageWrapper {
+    .logoText {
+      .remind {
+        font-size: 50px;
+      }
+      .messenger {
+        font-size: 24px;
+      }
+    }
+  }
+
+  .switchButton {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .formContainer {
+    max-width: 95%;
+  }
+
+  .authSvg {
+    width: 100px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageWrapper {
+    .logoText {
+      .remind {
+        font-size: 30px;
+      }
+
+      .messenger {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .switchButton {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .formContainer {
+    max-width: 100%;
+  }
+
+  .authSvg {
+    width: 70px;
+    height: 90px;
+  }
 }

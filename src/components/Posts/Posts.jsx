@@ -24,6 +24,7 @@ const Posts = () => {
 
   return (
     <div>
+      <SortPanel sortBy={sortBy} setSortBy={setSortBy} />
       <div className={c.postsWrapper}>
         <div className={c.controls}>
           <Link className={c.btnCreate} to="/create-post">
@@ -46,7 +47,6 @@ const Posts = () => {
           )}
         </div>
       </div>
-      <SortPanel sortBy={sortBy} setSortBy={setSortBy} />
     </div>
   );
 };
