@@ -17,6 +17,7 @@ import FriendsPage from "./pages/FriendsPage";
 import Sidebar from "./api/UI/UX/Sidebar";
 import Header from "./api/UI/Header";
 import ProtectedRoute from "./protectedRoute";
+import c from "./Router.module.scss"
 
 function Layout() {
   const location = useLocation();
@@ -25,7 +26,7 @@ function Layout() {
   return (
     <div style={{ display: "flex", height: "100%" }}>
       {!hideSidebarRoutes.includes(location.pathname) && <Sidebar />}
-      <div style={{ flex: 1, height: "100%" }}>
+      <div style={{ flex: 1, height: "100%"}}>
         <Routes>
           <Route path="/authorization" element={<AuthorizationPage />} />
           <Route path="/" element={<Navigate to="/posts" replace />} />
