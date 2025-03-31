@@ -1,0 +1,73 @@
+{
+  "users": [
+    {
+      "id": "1963",
+      "username": "liza.truranova@gmail.com",
+      "email": "liza.truranova@gmail.com",
+      "password": "$2b$10$pdoZ5xM3qdgm4JLqQWZnaOMoy1PqKiwxBh1o8f2o3jMNHQF2V69PK",
+      "followers": [],
+      "followed": [],
+      "friends": [],
+      "avatar": "http://localhost:4000/uploads/avatars/1743422944291-photo_2024-09-01_02-02-15.jpg",
+      "description": "",
+      "posts": [
+        {
+          "user": "liza.truranova@gmail.com",
+          "images": {
+            "urls": [
+              "http://localhost:4000/uploads/posts/1743423011293-IMG_0297.MOV",
+              "http://localhost:4000/uploads/posts/1743423011307-Ð¡Ð¾ÑÑÐ¸ÑÐ¾Ð²ÐºÐ° Ð²ÑÐ±Ð¾ÑÐ¾Ð¼.drawio (1).png",
+              "http://localhost:4000/uploads/posts/1743423011308-IMG_0297.MOV",
+              "http://localhost:4000/uploads/posts/1743423011320-Ð¡Ð¾ÑÑÐ¸ÑÐ¾Ð²ÐºÐ° Ð²ÑÐ±Ð¾ÑÐ¾Ð¼.drawio.png"
+            ]
+          },
+          "title": "asd",
+          "text": "asdasdasd",
+          "id": "2b19089f-23db-4ca6-9133-223a9973e9e7",
+          "comments": [
+            {
+              "id": "49577e37-2fda-436c-9479-bd4071ae17cb",
+              "userId": "1963",
+              "text": "asdasdasd",
+              "createdAt": "2025-03-31T12:10:51.462Z"
+            }
+          ],
+          "createdAt": "2025-03-31T12:10:11.326Z",
+          "likes": []
+        }
+      ],
+      "messages": [
+        {
+          "id": "21c67744-9623-44f6-afbb-63b547b0a005",
+          "username": "liza.truranova@gmail.com",
+          "message": "",
+          "senderId": "1963",
+          "recipientId": "1963",
+          "event": "message",
+          "timestamp": "2025-03-31T12:15:52.283Z",
+          "fileUrl": "http://localhost:4000/uploads/messages/1743423352259-IMG_0297.MOV"
+        },
+        {
+          "id": "f83d7b93-0f15-47b0-9ae9-deb99d0c7186",
+          "username": "liza.truranova@gmail.com",
+          "message": "",
+          "senderId": "1963",
+          "recipientId": "1963",
+          "event": "message",
+          "timestamp": "2025-03-31T12:18:03.351Z",
+          "fileUrl": "http://localhost:4000/uploads/messages/1743423483335-IMG_0297.MOV"
+        },
+        {
+          "id": "f240011d-1c40-4173-81fb-db64d904517e",
+          "username": "liza.truranova@gmail.com",
+          "message": "",
+          "senderId": "1963",
+          "recipientId": "1963",
+          "event": "message",
+          "timestamp": "2025-03-31T12:18:07.955Z",
+          "fileUrl": "http://localhost:4000/uploads/messages/1743423487943-Ð¡Ð¾ÑÑÐ¸ÑÐ¾Ð²ÐºÐ° Ð²ÑÐ±Ð¾ÑÐ¾Ð¼.drawio (2).png"
+        }
+      ]
+    }
+  ]
+}
