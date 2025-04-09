@@ -5,16 +5,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
-// const { Pool } = require("pg");
-
-// const pool = new Pool({
-//   user: process.env.DB_USER,
-//   host: process.env.DB_HOST,
-//   database: process.env.DB_NAME,
-//   password: process.env.DB_PASS,
-//   port: process.env.DB_PORT,
-// });
-
 const app = express();
 
 const { PORT, WS_PORT, SECRET_KEY, API_URL } = process.env;
@@ -48,8 +38,67 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
+const multer = require("multer");
+const path = require("path");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const fileType = req.body.fileType;
+
+    let uploadPath = path.join(__dirname, "./uploads");
+
+    if (fileType === "posts") {
+      uploadPath = path.join(uploadPath, "posts");
+    } else if (fileType === "messages") {
+      uploadPath = path.join(uploadPath, "messages");
+    } else if (fileType === "avatars") {
+      uploadPath = path.join(uploadPath, "avatars");
+    }
+
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
+
+app.post("/upload", upload.any(), (req, res) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ message: "Ошибка загрузки файла" });
+  }
+
+  const urls = req.files.map((file) => {
+    const fileType = req.body.fileType || "default";
+    return `http://localhost:4000/uploads/${fileType}/${file.filename}`;
+  });
+
+  res.json({ urls });
+});
+
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 async function fetchUserFromDB(userId) {
   const response = await fetch(`http://localhost:3001/users/${userId}`);
+  if (!response.ok) {
+    throw new Error("User not found");
+  }
+  return await response.json();
+}
+
+async function fetchUserFromDB(userId) {
+  const response = await fetch(`http://localhost:3001/users/${userId}`);
+  if (!response.ok) {
+    throw new Error("User not found");
+  }
+  return await response.json();
+}
+
+async function fetchGroupFromDB(groupId, userId) {
+  const response = await fetch(
+    `http://localhost:3001/users/${userId}/groups/${groupId}`
+  );
+  console.log(response)
   if (!response.ok) {
     throw new Error("User not found");
   }
@@ -69,6 +118,19 @@ app.get("/users/:userId", authMiddleware, async (req, res) => {
 
   try {
     const user = await fetchUserFromDB(userId);
+    res.json(user);
+  } catch (error) {
+    return res.status(404).json({ message: "User not found" });
+  }
+});
+
+app.get("/users/:userId/groups/:groupId", authMiddleware, async (req, res) => {
+  const { groupId } = req.params;
+  const { userId } = req.params;
+
+  console.log("ads")
+  try {
+    const user = await fetchGroupFromDB(groupId, userId);
     res.json(user);
   } catch (error) {
     return res.status(404).json({ message: "User not found" });
@@ -98,6 +160,30 @@ app.put("/users/:userId", authMiddleware, async (req, res) => {
   }
 });
 
+app.put("/users/:userId/groups/:groupId", authMiddleware, async (req, res) => {
+  const { userId } = req.params;
+  const { groupId } = req.params;
+  const updatedGroupData = req.body;
+
+  try {
+    const response = await fetch(`http://localhost:3001/users/${userId}/groups/${groupId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedGroupData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update user data");
+    }
+
+    res.status(200).json(updatedGroupData);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 app.get(`/users`, authMiddleware, async (req, res) => {
   try {
     const users = await fetchUsers();
@@ -110,9 +196,6 @@ app.get(`/users`, authMiddleware, async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-const wss = new WebSocket.Server({ port: WS_PORT });
-let clients = new Map();
 
 app.post("/register", async (req, res) => {
   const { email, password } = req.body;
@@ -186,13 +269,28 @@ app.post("/login", async (req, res) => {
   res.json({ token, user });
 });
 
+const wss = new WebSocket.Server({ port: WS_PORT });
+let clients = new Map();
+let rooms = new Map();
+
 wss.on("connection", (ws) => {
   ws.on("message", (message) => {
     const msg = JSON.parse(message);
+    const { event, id, username, avatar, recipientId, groupId, text } = msg;
 
     if (msg.event === "connection") {
       clients.set(msg.id, ws);
       console.log(`User ${msg.username} connected.`);
+      return;
+    }
+
+    if (event === "join_room") {
+      if (!rooms.has(groupId)) {
+        rooms.set(groupId, new Set());
+      }
+      rooms.get(groupId).add(id);
+      ws.groupId = groupId;
+      console.log(`User ${username} joined room ${groupId}`);
       return;
     }
 
@@ -209,6 +307,17 @@ wss.on("connection", (ws) => {
       const senderSocket = clients.get(msg.id);
       if (senderSocket) {
         senderSocket.send(JSON.stringify(msg));
+      }
+    } else if (groupId) {
+      console.log(`Group message from ${username} in room ${groupId}: ${text}`);
+
+      if (rooms.has(groupId)) {
+        rooms.get(groupId).forEach((userId) => {
+          const client = clients.get(userId);
+          if (client && client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(msg));
+          }
+        });
       }
     }
   });
