@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import {  useEffect } from "react";
+import React from "react";
 import { useNavigate, Outlet } from "react-router-dom";
-import c from "./protectedRoute.module.scss"
+import c from "./protectedRoute.module.scss";
 
 const ProtectedRoute = ({ redirectTo = "/authorization" }) => {
   const token = localStorage.getItem("token");
