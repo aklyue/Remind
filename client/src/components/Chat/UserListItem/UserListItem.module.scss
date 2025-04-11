@@ -1,0 +1,30 @@
+.userItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  position: relative;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 5px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
+}
+
+.unreadBadge {
+  background-color: #8b5e3c;
+  position: absolute;
+  color: white;
+  font-size: 12px;
+  padding: 5px 5px;
+  border-radius: 12px;
+  right: 20px;
+  max-width: 30px;
+  text-align: center;
+  display: inline-block;
+}
