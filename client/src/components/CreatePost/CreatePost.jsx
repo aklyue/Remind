@@ -12,6 +12,7 @@ function CreatePost() {
   const [text, setText] = useState("");
   const [postId, setPostId] = useState("");
   const navigate = useNavigate();
+  const token = localStorage.getItem("token")
   const { data: user, isFetching } = useGetUsers(userId);
 
   useEffect(() => {
@@ -76,9 +77,12 @@ function CreatePost() {
 
       const updatedPosts = [...user.posts, post];
 
-      const response = await fetch(`http://localhost:3001/users/${userId}`, {
+      const response = await fetch(`http://localhost:4000/users/${userId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ ...user, posts: updatedPosts }),
       });
 

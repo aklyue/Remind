@@ -104,10 +104,13 @@ function Settings() {
           description,
         };
 
-        const response = await fetch(`http://localhost:3001/users/${userId}`, {
+        console.log(username);
+
+        const response = await fetch(`http://localhost:4000/users/${userId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(updatedUser),
         });

@@ -28,7 +28,7 @@ export default function usePostActions(users, fetchPosts) {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/users/${postOwner.id}`,
+        `http://localhost:4000/users/${postOwner.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -43,15 +43,30 @@ export default function usePostActions(users, fetchPosts) {
           : post
       );
 
-      await fetch(`http://localhost:3001/users/${postOwner.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ posts: updatedPosts }),
-      });
+      const updatedUserData = {
+        ...userData,
+        posts: updatedPosts,
+      };
 
-      fetchPosts();
-      setCommentText("");
-      setCommentPostId(null);
+      const putResponse = await fetch(
+        `http://localhost:4000/users/${postOwner.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedUserData),
+        }
+      );
+
+      if (putResponse.ok) {
+        fetchPosts();
+        setCommentText("");
+        setCommentPostId(null);
+      } else {
+        console.error("Ошибка при обновлении поста");
+      }
     } catch (error) {
       console.error("Ошибка при добавлении комментария:", error);
     }
@@ -66,10 +81,11 @@ export default function usePostActions(users, fetchPosts) {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/users/${postOwner.id}`, {
+        `http://localhost:4000/users/${postOwner.id}`,
+        {
           headers: {
             Authorization: `Bearer ${token}`,
-          }
+          },
         }
       );
       const userData = await response.json();
@@ -87,13 +103,28 @@ export default function usePostActions(users, fetchPosts) {
         return post;
       });
 
-      await fetch(`http://localhost:3001/users/${postOwner.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ posts: updatedPosts }),
-      });
+      const updatedUserData = {
+        ...userData,
+        posts: updatedPosts,
+      };
 
-      dispatch(toggleLike({ postId, userId }));
+      const putResponse = await fetch(
+        `http://localhost:4000/users/${postOwner.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedUserData),
+        }
+      );
+
+      if (putResponse.ok) {
+        dispatch(toggleLike({ postId, userId }));
+      } else {
+        console.error("Ошибка при обновлении лайков");
+      }
     } catch (error) {
       console.error("Ошибка при лайке:", error);
     }
