@@ -7,6 +7,16 @@ require("dotenv").config();
 
 const app = express();
 
+const { Pool } = require("pg");
+
+const pool = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
+  port: process.env.DB_PORT,
+});
+
 const { PORT, WS_PORT, SECRET_KEY, API_URL } = process.env;
 if (!SECRET_KEY) {
   console.error("SECRET_KEY is not defined in .env file");
@@ -15,7 +25,11 @@ if (!SECRET_KEY) {
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "http://localhost:4000",
+    ],
     credentials: true,
   })
 );
@@ -78,37 +92,14 @@ app.post("/upload", upload.any(), (req, res) => {
 });
 
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
-async function fetchUserFromDB(userId) {
-  const response = await fetch(`http://localhost:3001/users/${userId}`);
-  if (!response.ok) {
-    throw new Error("User not found");
-  }
-  return await response.json();
-}
-
-async function fetchUserFromDB(userId) {
-  const response = await fetch(`http://localhost:3001/users/${userId}`);
-  if (!response.ok) {
-    throw new Error("User not found");
-  }
-  return await response.json();
-}
 
 async function fetchGroupFromDB(groupId, userId) {
   const response = await fetch(
-    `http://localhost:3001/users/${userId}/groups/${groupId}`
+    `http://localhost:5432/users/${userId}/groups/${groupId}`
   );
-  console.log(response)
+  console.log(response);
   if (!response.ok) {
     throw new Error("User not found");
-  }
-  return await response.json();
-}
-
-async function fetchUsers() {
-  const response = await fetch(`http://localhost:3001/users`);
-  if (!response.ok) {
-    throw new Error("Users not found");
   }
   return await response.json();
 }
@@ -117,10 +108,15 @@ app.get("/users/:userId", authMiddleware, async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const user = await fetchUserFromDB(userId);
-    res.json(user);
+    const result = await pool.query("SELECT * FROM users WHERE id = $1", [
+      userId,
+    ]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(result.rows[0]);
   } catch (error) {
-    return res.status(404).json({ message: "User not found" });
+    return res.status(500).json({ message: error.message });
   }
 });
 
@@ -128,7 +124,7 @@ app.get("/users/:userId/groups/:groupId", authMiddleware, async (req, res) => {
   const { groupId } = req.params;
   const { userId } = req.params;
 
-  console.log("ads")
+  console.log("ads");
   try {
     const user = await fetchGroupFromDB(groupId, userId);
     res.json(user);
@@ -139,24 +135,56 @@ app.get("/users/:userId/groups/:groupId", authMiddleware, async (req, res) => {
 
 app.put("/users/:userId", authMiddleware, async (req, res) => {
   const { userId } = req.params;
-  const updatedUserData = req.body;
-
+  const updatedUser = req.body;
   try {
-    const response = await fetch(`http://localhost:3001/users/${userId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedUserData),
-    });
+    const {
+      username,
+      email,
+      password,
+      avatar,
+      description,
+      followers,
+      followed,
+      friends,
+      posts,
+      messages,
+    } = updatedUser;
 
-    if (!response.ok) {
-      throw new Error("Failed to update user data");
-    }
+    const result = await pool.query(
+      `
+      UPDATE users SET
+        username = $1,
+        email = $2,
+        password = $3,
+        avatar = $4,
+        description = $5,
+        followers = $6::json,
+        followed = $7::json,
+        friends = $8::json,
+        posts = $9::json,
+        messages = $10::json
+      WHERE id = $11
+      RETURNING *
+      `,
+      [
+        username,
+        email,
+        password,
+        avatar,
+        description,
+        JSON.stringify(followers),
+        JSON.stringify(followed),
+        JSON.stringify(friends),
+        JSON.stringify(posts),
+        JSON.stringify(messages),
+        userId,
+      ]
+    );
 
-    res.status(200).json(updatedUserData);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    console.error("🔥 Ошибка при обновлении пользователя:", error, updatedUser);
+    res.status(500).json({ message: "Ошибка при обновлении пользователя" });
   }
 });
 
@@ -166,13 +194,16 @@ app.put("/users/:userId/groups/:groupId", authMiddleware, async (req, res) => {
   const updatedGroupData = req.body;
 
   try {
-    const response = await fetch(`http://localhost:3001/users/${userId}/groups/${groupId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedGroupData),
-    });
+    const response = await fetch(
+      `http://localhost:3001/users/${userId}/groups/${groupId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedGroupData),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to update user data");
@@ -184,10 +215,10 @@ app.put("/users/:userId/groups/:groupId", authMiddleware, async (req, res) => {
   }
 });
 
-app.get(`/users`, authMiddleware, async (req, res) => {
+app.get("/users", authMiddleware, async (req, res) => {
   try {
-    const users = await fetchUsers();
-    res.json(users);
+    const result = await pool.query("SELECT * FROM users");
+    res.json(result.rows);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -200,59 +231,40 @@ app.listen(PORT, () => {
 app.post("/register", async (req, res) => {
   const { email, password } = req.body;
 
-  const response = await fetch(API_URL);
-  const users = await response.json();
-
-  if (users.some((user) => user.email === email)) {
+  const existing = await pool.query("SELECT * FROM users WHERE email = $1", [
+    email,
+  ]);
+  if (existing.rows.length > 0) {
     return res
       .status(400)
       .json({ message: "This email is already registered" });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
+  const defaultAvatar =
+    "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg";
 
-  const newUser = {
-    username: email,
-    email,
-    password: hashedPassword,
-    followers: [],
-    followed: [],
-    friends: [],
-    avatar:
-      "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
-    description: "",
-    posts: [],
-    messages: [],
-  };
-
-  const saveResponse = await fetch("http://localhost:3001/users", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newUser),
-  });
-
-  if (!saveResponse.ok) {
-    return res.status(500).json({ message: "Failed to save user" });
-  }
-
-  const savedUser = await saveResponse.json();
-
-  const token = jwt.sign(
-    { id: savedUser.id, email: savedUser.email },
-    SECRET_KEY,
-    { expiresIn: "7d" }
+  const result = await pool.query(
+    `INSERT INTO users (username, email, password, avatar, description, followers, followed, friends, posts, messages)
+     VALUES ($1, $2, $3, $4, '', '[]', '[]', '[]', '[]', '[]') RETURNING *`,
+    [email, email, hashedPassword, defaultAvatar]
   );
 
-  res.json({ token, user: savedUser });
+  const newUser = result.rows[0];
+  const token = jwt.sign({ id: newUser.id, email: newUser.email }, SECRET_KEY, {
+    expiresIn: "7d",
+  });
+
+  res.json({ token, user: newUser });
 });
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  const response = await fetch(API_URL);
-  const users = await response.json();
-
-  const user = users.find((user) => user.email === email);
+  const result = await pool.query("SELECT * FROM users WHERE email = $1", [
+    email,
+  ]);
+  const user = result.rows[0];
   if (!user) {
     return res.status(400).json({ message: "Incorrect email or password" });
   }

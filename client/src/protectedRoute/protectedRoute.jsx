@@ -5,6 +5,7 @@ import c from "./protectedRoute.module.scss";
 
 const ProtectedRoute = ({ redirectTo = "/authorization" }) => {
   const token = localStorage.getItem("token");
+  console.log(token)
   const navigate = useNavigate();
 
   useEffect(() => {

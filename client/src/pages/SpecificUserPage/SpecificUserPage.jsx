@@ -9,6 +9,7 @@ function SpecificUserPage() {
   const currentUserId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const [currentUser, setCurrentUser] = useState(null);
+  console.log(currentUser)
   const [isFollowing, setIsFollowing] = useState(false);
   const [showAllFollowers, setShowAllFollowers] = useState(false);
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ function SpecificUserPage() {
         }
       }
 
-      const updateUser = fetch(`http://localhost:3001/users/${userId}`, {
+      const updateUser = fetch(`http://localhost:4000/users/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +83,7 @@ function SpecificUserPage() {
       });
 
       const updateCurrentUser = fetch(
-        `http://localhost:3001/users/${currentUserId}`,
+        `http://localhost:4000/users/${currentUserId}`,
         {
           method: "PUT",
           headers: {
