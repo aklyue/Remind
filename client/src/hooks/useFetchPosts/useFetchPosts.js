@@ -14,7 +14,6 @@ export default function useFetchPosts() {
 
   const fetchPosts = async () => {
     const data = await getUsers();
-    console.log("Ответ от /users:", data);
     setUsers(data);
 
     if (!token) {
