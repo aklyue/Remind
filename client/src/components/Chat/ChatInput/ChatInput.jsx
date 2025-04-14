@@ -77,33 +77,60 @@ export default function ChatInput({ sendMessage, setFile }) {
   };
 
   return (
-    <div className={c.chatInput}>
-      <input
-        onKeyDown={onKeyHandler}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="Введите сообщение..."
-      />
-      <div className={c.fileInputContainer}>
-        <label htmlFor="file-input">
-          <FaPaperclip size={24} />
-        </label>
-        <input
-          id="file-input"
-          type="file"
-          onChange={handleFileChange}
-          style={{ display: "none" }}
-        />
-        {loading && (
-          <div className={c.uploadProgress}>
-            Загрузка: {Math.round(progress)}%
+    <div className={c.mainContainer}>
+      <div className={c.previewContainer}>
+        {file && (
+          <div className={c.preview}>
+            <button
+              className={c.removeFileBtn}
+              onClick={() => {
+                setLocalFile(null);
+                setFile(null);
+                setUploadSuccess(false);
+                setProgress(0);
+              }}
+            >
+              ✖
+            </button>
+            {file.type.startsWith("image/") ? (
+              <img src={URL.createObjectURL(file)} alt="preview" />
+            ) : file.type.startsWith("video/") ? (
+              <video controls>
+                <source src={URL.createObjectURL(file)} type={file.type} />
+                Ваш браузер не поддерживает видео.
+              </video>
+            ) : null}
           </div>
         )}
-        {uploadSuccess && (
-          <div className={c.uploadSuccess}>Файл успешно загружен!</div>
-        )}
       </div>
-      <button onClick={handleSend}>Отправить</button>
+      <div className={c.chatInput}>
+        <input
+          onKeyDown={onKeyHandler}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder="Введите сообщение..."
+        />
+        <div className={c.fileInputContainer}>
+          <label htmlFor="file-input" style={{ cursor: "pointer" }}>
+            <FaPaperclip
+              size={24}
+              className={`
+        ${c.paperclipIcon}
+        ${loading ? c.loading : ""}
+        ${uploadSuccess ? c.success : ""}
+      `}
+            />
+            {uploadSuccess && <div className={c.successLabel}>Success</div>}
+          </label>
+          <input
+            id="file-input"
+            type="file"
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
+        </div>
+        <button onClick={handleSend}>Отправить</button>
+      </div>
     </div>
   );
 }
