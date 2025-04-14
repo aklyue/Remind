@@ -39,11 +39,10 @@ body {
   color: #333;
   transition: all 0.2s;
 
-  &:hover{
+  &:hover {
     color: #7a7464;
   }
 }
-
 
 .avatar {
   width: 40px;
@@ -51,16 +50,15 @@ body {
   border-radius: 50%;
 }
 
-  .chatBtn{
-    width: 24px;
-    height: 24px;
-    fill: #333;
-    transition: all 0.2s;
+.chatBtn {
+  width: 24px;
+  height: 24px;
+  fill: #333;
+  transition: all 0.2s;
 
-    &:hover{
-      fill: #7a7464;
-      cursor: pointer;
-      transform: scale(1.1);
-    }
+  &:hover {
+    fill: #7a7464;
+    cursor: pointer;
+    transform: scale(1.1);
   }
-
+}

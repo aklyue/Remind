@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import c from "./Chat.module.scss";
+import * as c from "./Chat.module.scss";
 import { useUsers } from "../../hooks/useUsers/useUsers";
 import useMessages from "../../hooks/useMessages/useMessages";
 import UserListItem from "./UserListItem";
@@ -62,7 +62,7 @@ function Chat() {
   }, []);
 
   if (!currentUser) {
-    return <div>Загрузка...</div>;
+    return <div className={c.spinner}></div>;
   }
 
   const handleUserClick = (user) => {

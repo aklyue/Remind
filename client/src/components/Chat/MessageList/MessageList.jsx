@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import c from "./MessageList.module.scss";
+import * as c from "./MessageList.module.scss";
 
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
@@ -87,10 +87,10 @@ export default function MessageList({
               key={msg.id}
               className={msg.senderId === userId ? c.myMessage : c.otherMessage}
             >
-              <div className={c.messageHeader}>
+              <div>
                 <span className={c.username}>{msg.username || "Аноним"}</span>
               </div>
-              <div className={c.text}>{msg.message}</div>
+              <div>{msg.message}</div>
 
               {msg.fileUrl && (
                 <div className={c.media}>
@@ -108,7 +108,6 @@ export default function MessageList({
                     <img
                       src={msg.fileUrl}
                       alt="Отправленный файл"
-                      className={c.image}
                       onClick={() => openModal(msg.fileUrl, "image")}
                     />
                   )}

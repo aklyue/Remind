@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getUsers } from "../../api/users";
-import c from "./Friends.module.scss";
+import * as c from "./Friends.module.scss";
 import { useUsers } from "../../hooks/useUsers/useUsers";
 
 function Friends() {

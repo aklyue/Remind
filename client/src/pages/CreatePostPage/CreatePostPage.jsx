@@ -1,6 +1,6 @@
 import React from "react";
 import CreatePost from "../../components/CreatePost";
-import c from "./CreatePostPage.module.scss"
+import * as c from "./CreatePostPage.module.scss"
 
 function CreatePostPage() {
   return (

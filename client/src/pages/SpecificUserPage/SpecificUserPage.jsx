@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useGetUsers from "../../hooks/query/useGetUsers";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import c from "./SpecificUserPage.module.scss";
+import * as c from "./SpecificUserPage.module.scss";
 
 function SpecificUserPage() {
   const { userId } = useParams();
@@ -36,11 +36,11 @@ function SpecificUserPage() {
   }, [user, currentUserId]);
 
   if (isFetching) {
-    return <div className={c.loading}>Loading...</div>;
+    return <div className={c.spinner}></div>;
   }
 
   if (!user) {
-    return <div className={c.notFound}>User not found</div>;
+    return <div>User not found</div>;
   }
 
   const handleFollow = async () => {
@@ -140,7 +140,6 @@ function SpecificUserPage() {
                 ))}
                 {user.followers.length > 3 && (
                   <button
-                    className={c.showAllBtn}
                     onClick={() => setShowAllFollowers(true)}
                   >
                     Show all ({user.followers.length})
@@ -204,10 +203,9 @@ function SpecificUserPage() {
 
         {showAllFollowers && (
           <div
-            className={c.modalOverlay}
             onClick={() => setShowAllFollowers(false)}
           >
-            <div className={c.modal} onClick={(e) => e.stopPropagation()}>
+            <div onClick={(e) => e.stopPropagation()}>
               <h3>All Followers</h3>
               <ul className={c.fullFollowersList}>
                 {user.followers.map((follower) => (
@@ -222,7 +220,6 @@ function SpecificUserPage() {
                 ))}
               </ul>
               <button
-                className={c.closeModal}
                 onClick={() => setShowAllFollowers(false)}
               >
                 Close

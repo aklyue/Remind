@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Authorization from "../../components/Authorization";
 import Validation from "../../components/Validation";
-import styles from "./AuthorizationPage.module.scss";
+import * as styles from "./AuthorizationPage.module.scss";
 
 function AuthorizationPage() {
   const [activeForm, setActiveForm] = useState("signUp");

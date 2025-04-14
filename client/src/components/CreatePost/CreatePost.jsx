@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import useGetUsers from "../../hooks/query/useGetUsers";
-import c from "./CreatePost.module.scss";
+import * as c from "./CreatePost.module.scss";
 import { useNavigate } from "react-router-dom";
 
 function CreatePost() {

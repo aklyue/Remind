@@ -1,4 +1,4 @@
-@import "../../../api/UI/styles/Variables.modules.scss";
+@use "../../../api/UI/styles/Variables.modules.scss" as *;
 
 .commentsSection {
   padding: 20px;

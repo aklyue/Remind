@@ -1,5 +1,5 @@
 import React from "react";
-import c from "./SortPanel.module.scss";
+import * as c from "./SortPanel.module.scss";
 
 function SortPanel({sortBy, setSortBy}) {
   return (

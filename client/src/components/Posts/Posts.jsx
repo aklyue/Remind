@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useFetchPosts from "../../hooks/useFetchPosts/useFetchPosts";
 import PostItem from "./PostItem";
-import c from "./Posts.module.scss";
+import * as c from "./Posts.module.scss";
 import SortPanel from "./SortPanel";
 
 const Posts = () => {
@@ -21,6 +21,10 @@ const Posts = () => {
     }
     return 0;
   });
+
+  if(!allPosts.length) return (
+    <div className={c.spinner}></div>
+  )
 
   return (
     <div>

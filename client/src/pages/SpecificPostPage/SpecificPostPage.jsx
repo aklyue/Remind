@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import c from "./SpecificPostPage.module.scss";
+import * as c from "./SpecificPostPage.module.scss";
 import useFetchPosts from "../../hooks/useFetchPosts/useFetchPosts";
 
 function SpecificPostPage() {

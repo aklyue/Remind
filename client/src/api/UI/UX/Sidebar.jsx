@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import c from "./Sidebar.module.scss";
+import * as c from "./Sidebar.module.scss";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
