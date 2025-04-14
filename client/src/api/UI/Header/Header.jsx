@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserById, getUsers } from "../../users";
-import c from "./Header.module.scss";
 import { useSelector } from "react-redux";
 import UserSearch from "../UserSearch";
+import * as c from "./Header.module.scss";
 
 function Header() {
   const userId = localStorage.getItem("userId");

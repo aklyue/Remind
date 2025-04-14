@@ -1,4 +1,4 @@
-@import "../../../api/UI/styles/Variables.modules.scss";
+@use "../../../api/UI/styles/Variables.modules.scss" as *;
 
 .postItem {
   background: #fff;
@@ -22,10 +22,7 @@
   color: #333;
   font-weight: bold;
   gap: 10px;
-
-  &:hover {
-    text-decoration: underline;
-  }
+  cursor: pointer;
 }
 
 .authorAvatar {
@@ -34,6 +31,14 @@
   border-radius: 50%;
   aspect-ratio: 1/1;
   overflow: hidden;
+  cursor: pointer;
+}
+
+.authorName{
+  cursor: pointer;
+  &:hover{
+    text-decoration: underline;
+  }
 }
 
 .postTime {

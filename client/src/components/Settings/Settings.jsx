@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import useBlurHandler from "../../hooks/useBlurHandler";
 import useEmail from "../../hooks/useEmail";
-import c from "./Settings.module.scss";
+import * as c from "./Settings.module.scss";
 
 function Settings() {
   const { email, emailError, emailHandler, setEmail } = useEmail("");

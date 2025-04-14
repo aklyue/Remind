@@ -1,5 +1,5 @@
 import React from "react";
-import c from "./UserListItem.module.scss";
+import * as c from "./UserListItem.module.scss";
 
 export default function UserListItem({ user, unreadMessages, onClick }) {
   const unreadCount = unreadMessages[user.id] || 0;

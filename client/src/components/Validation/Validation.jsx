@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useEmail from "../../hooks/useEmail";
 import usePassword from "../../hooks/usePassword";
 import useBlurHandler from "../../hooks/useBlurHandler";
-import styles from "./Validation.module.scss";
+import * as styles from "./Validation.module.scss";
 
 function Validation() {
   const { email, emailError, emailHandler } = useEmail("");

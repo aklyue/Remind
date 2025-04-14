@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getUsers } from "../../users";
 import { Link } from "react-router-dom";
-import c from "./UserSearch.module.scss";
+import * as c from "./UserSearch.module.scss";
 
 function UserSearch() {
   const [searchText, setSearchText] = useState("");
@@ -50,7 +50,6 @@ function UserSearch() {
                 <img
                   src={user.avatar}
                   alt={user.username}
-                  className={c.avatar}
                 />
                 {user.username}
               </li>

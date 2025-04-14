@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import c from "./Comments.module.scss";
+import * as c from "./Comments.module.scss";
 
 const Comments = ({
   post,

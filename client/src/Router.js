@@ -17,7 +17,7 @@ import FriendsPage from "./pages/FriendsPage";
 import Sidebar from "./api/UI/UX/Sidebar";
 import Header from "./api/UI/Header";
 import ProtectedRoute from "./protectedRoute";
-import c from "./Router.module.scss";
+import * as c from "./Router.module.scss";
 import CreateGroupPage from "./pages/CreateGroupPage";
 
 function Layout() {

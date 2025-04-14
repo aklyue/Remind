@@ -1,6 +1,6 @@
 import React from 'react'
 import Friends from '../../components/Friends'
-import c from "./FriendsPage.module.scss"
+import * as c from "./FriendsPage.module.scss"
 
 function FriendsPage() {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import Posts from "../../components/Posts";
-import c from "./PostsPage.module.scss"
+import * as c from "./PostsPage.module.scss"
 
 function PostsPage() {
   return (

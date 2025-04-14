@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useEmail from "../../hooks/useEmail";
 import usePassword from "../../hooks/usePassword";
 import useBlurHandler from "../../hooks/useBlurHandler";
-import styles from "./Authorization.module.scss";
+import * as styles from "./Authorization.module.scss";
 
 function Authorization() {
   const { email, emailError, emailHandler } = useEmail("");

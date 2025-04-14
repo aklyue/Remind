@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import c from "./ChatInput.module.scss";
+import * as c from "./ChatInput.module.scss";
 import { FaPaperclip } from "react-icons/fa";
 
 export default function ChatInput({ sendMessage, setFile }) {

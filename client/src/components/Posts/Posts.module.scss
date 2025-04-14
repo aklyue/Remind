@@ -16,6 +16,27 @@ $box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
 }
 
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #7a7464;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .btnCreate {
   text-decoration: none;
   margin-bottom: 20px;

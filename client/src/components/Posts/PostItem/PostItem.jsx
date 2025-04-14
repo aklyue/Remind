@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import usePostActions from "../../../hooks/usePostActions/usePostActions";
 import Comments from "../Comments";
-import c from "./PostItem.module.scss";
+import * as c from "./PostItem.module.scss";
 
 function formatTime(timestamp) {
   const date = new Date(timestamp);
@@ -72,7 +72,7 @@ const PostItem = ({ post, users, fetchPosts }) => {
               className={c.authorAvatar}
             />
           )}
-          <span>{post.username}</span>
+          <span className={c.authorName}>{post.username}</span>
         </Link>
         <p className={c.postTime} data-no-navigate>
           {formatTime(post.createdAt)}
@@ -92,7 +92,6 @@ const PostItem = ({ post, users, fetchPosts }) => {
         {post.images?.urls?.map((url, index) => (
           <div
             key={index}
-            className={c.mediaContainer}
             style={{
               "--span-count": post.images.urls.length,
             }}
@@ -142,7 +141,7 @@ const PostItem = ({ post, users, fetchPosts }) => {
       {selectedImage && (
         <div className={c.overlay} onClick={closeImage} data-no-navigate>
           {isVideo(selectedImage) ? (
-            <video className={c.fullMedia} src={selectedImage} controls />
+            <video src={selectedImage} controls />
           ) : (
             <img className={c.fullImage} src={selectedImage} alt="Full-size" />
           )}
