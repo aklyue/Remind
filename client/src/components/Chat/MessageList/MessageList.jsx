@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import * as c from "./MessageList.module.scss";
 
 const formatDate = (timestamp) => {
@@ -88,15 +89,16 @@ export default function MessageList({
               className={msg.senderId === userId ? c.myMessage : c.otherMessage}
             >
               <div>
-                <span className={c.username}>{msg.username || "Аноним"}</span>
+                <Link className={msg.senderId === userId ? c.myUsername : c.otherUsername} to={`/users/${msg.senderId}`}>
+                  <span>{msg.username || "Аноним"}</span>
+                </Link>
               </div>
-              <div>{msg.message}</div>
 
               {msg.fileUrl && (
                 <div className={c.media}>
                   {msg.fileUrl.endsWith(".mp4") ||
                   msg.fileUrl.endsWith(".webm") ||
-                  msg.fileUrl.endsWith(".MOV")  ? (
+                  msg.fileUrl.endsWith(".MOV") ? (
                     <video
                       controls
                       className={c.video}
@@ -113,6 +115,7 @@ export default function MessageList({
                   )}
                 </div>
               )}
+              <div className={msg.senderId === userId ? c.myMsg : c.otherMsg}>{msg.message}</div>
 
               <span className={c.timestamp}>{formatTime(msg.timestamp)}</span>
             </div>

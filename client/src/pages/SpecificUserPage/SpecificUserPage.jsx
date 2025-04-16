@@ -9,7 +9,6 @@ function SpecificUserPage() {
   const currentUserId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const [currentUser, setCurrentUser] = useState(null);
-  console.log(currentUser)
   const [isFollowing, setIsFollowing] = useState(false);
   const [showAllFollowers, setShowAllFollowers] = useState(false);
   const navigate = useNavigate();

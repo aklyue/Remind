@@ -14,7 +14,7 @@ function Chat() {
   const userId = localStorage.getItem("userId");
 
   const [recipientId, setRecipientId] = useState(
-    location?.state?.recipient?.id || userId
+    location.state.recipient.id
   );
 
   const [groupId, setGroupId] = useState(location?.state?.room?.id || null);

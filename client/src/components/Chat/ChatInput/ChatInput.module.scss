@@ -18,6 +18,7 @@
   display: flex;
   align-items: center;
   padding: 10px;
+  min-height: 0;
 }
 
 .removeFileBtn {
@@ -133,6 +134,10 @@
   transition: color 0.3s ease, transform 0.3s ease;
   color: #7a7464;
   margin: 10px 0 0 10px;
+
+  &:hover{
+    color: #9a927f;
+  }
 
   &.loading {
     color: orange;
