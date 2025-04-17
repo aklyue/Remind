@@ -19,17 +19,17 @@ const Comments = ({
           <p>Комментарии</p>
           <ul>
             {post.comments
-              .slice(0, expandedPosts[post.id] ? post.comments.length : 5)
+              .slice(0, expandedPosts[post.id] ? post.comments.length : 3)
               .map((comment) => (
                 <li key={comment.id}>
                   <div className={c.comment}>
-                    <Link to={`/users/${comment.userId}`}>
+                    <Link to={`/profile/${comment.userId}`}>
                       <img className={c.avatar} src={comment.avatar} alt="" />
                     </Link>
                     <div className={c.commentText}>
                       <Link
                         className={c.commentAuthor}
-                        to={`/users/${comment.userId}`}
+                        to={`/profile/${comment.userId}`}
                       >
                         <strong>{comment.username}</strong>
                       </Link>

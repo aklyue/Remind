@@ -32,7 +32,7 @@ function Friends() {
           <ul className={c.friendsList}>
             {friends.map((friend) => (
               <li key={friend.id} className={c.friendItem}>
-                <Link to={`/users/${friend.id}`} className={c.friendLink}>
+                <Link to={`/profile/${friend.id}`} className={c.friendLink}>
                   <img
                     src={friend.avatar}
                     alt={friend.username}

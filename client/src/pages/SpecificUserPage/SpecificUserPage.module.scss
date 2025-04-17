@@ -122,9 +122,15 @@
 .postItem {
   background: #f9f9f9;
   padding: 15px;
+  display: grid;
+  gap: 15px;
   border-radius: 8px;
   margin-bottom: 10px;
   box-shadow: $box-shadow;
+
+  .postImageContainer{
+    display: grid;
+  }
 }
 
 .postTitle {
@@ -139,7 +145,37 @@
   height: 100%;
   object-fit: cover;
   border-radius: 5px;
-  border: 4px solid #f9f9f9;
+}
+
+.postMedia {
+  width: 100%;
+  aspect-ratio: 1/1;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 4px solid white;
+}
+
+.single {
+  grid-template-columns: 98.5%;
+}
+
+.double {
+  grid-template-columns: 49.25% 49.25%;
+}
+
+.multiple {
+  grid-template-columns: 70% 28.5%;
+  grid-template-rows: 1fr 1fr;
+}
+
+.multiple div:first-child {
+  grid-row: span var(--span-count);
+}
+
+.multiple img:nth-child(2),
+.multiple img:nth-child(3) {
+  aspect-ratio: 1 / 1;
 }
 
 .postText {

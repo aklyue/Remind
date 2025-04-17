@@ -1,6 +1,6 @@
 .userItem {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
   align-items: center;
   padding: 10px 15px;
   position: relative;
@@ -14,10 +14,15 @@
   &:hover {
     background-color: #f1f1f1;
   }
+
+  .avatar{
+    width: 50px;
+    border-radius: 50%;
+  }
 }
 
 .unreadBadge {
-  background-color: #8b5e3c;
+  background-color: #7a7464;
   position: absolute;
   color: white;
   font-size: 12px;

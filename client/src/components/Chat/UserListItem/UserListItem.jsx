@@ -6,6 +6,7 @@ export default function UserListItem({ user, unreadMessages, onClick }) {
 
   return (
     <div className={c.userItem} onClick={onClick}>
+      <img className={c.avatar} src={user.avatar} alt="" />
       <span>{user.groupName || user.username}</span>
       {unreadCount > 0 && <span className={c.unreadBadge}>{unreadCount}</span>}
     </div>

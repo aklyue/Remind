@@ -46,13 +46,13 @@ function Header() {
       <div className={c.container}>
         {isUser && (
           <div className={c.img}>
-            <Link className={c.link} to={`/users/${userId}`}>
+            <Link className={c.link} to={`/profile/${userId}`}>
               <img className={c.avatar} src={user.avatar} alt="" />
             </Link>
           </div>
         )}
         <div className={c.info}>
-          <Link to={`/users/${userId}`}>
+          <Link to={`/profile/${userId}`}>
             <p>{user.username}</p>
           </Link>
           <Link to={`/settings`}>
@@ -121,7 +121,7 @@ function Header() {
               <div className={c.link}>
                 <p
                   className={c.unreadBadge}
-                  style={{ color: "#8e764f", cursor: "default" }}
+                  style={{ color: "#7a7464", cursor: "default" }}
                 >
                   {totalUnread}
                 </p>

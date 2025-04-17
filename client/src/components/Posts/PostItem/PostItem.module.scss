@@ -65,7 +65,7 @@
 .postTitle {
   font-size: 18px;
   font-weight: bold;
-  margin-top: 5px;
+  margin-top: 15px;
 }
 
 .likeSection {
@@ -83,6 +83,10 @@
     display: flex;
     align-items: center;
     gap: 5px;
+
+    &:hover{
+      background: #7a7464;
+    }
   }
 }
 
@@ -100,6 +104,7 @@
 
   &:hover {
     color: #fff;
+    background: #7a7464;
   }
 }
 
@@ -114,6 +119,7 @@
 
   &:hover {
     color: #fff;
+    background: #7a7464;
   }
 }
 
@@ -148,7 +154,7 @@ button {
   transition: 0.2s;
 
   &:hover {
-    background: $hover-color;
+    background: #7a7464;
     color: #fff;
   }
 }
