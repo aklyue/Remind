@@ -62,7 +62,7 @@ const PostItem = ({ post, users, fetchPosts }) => {
       <div className={c.postAuthor}>
         <Link
           data-no-navigate
-          to={`/users/${post.userId}`}
+          to={`/profile/${post.userId}`}
           className={c.authorLink}
         >
           {post.avatar && (

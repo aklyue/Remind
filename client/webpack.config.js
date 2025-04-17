@@ -21,6 +21,7 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -68,7 +69,9 @@ module.exports = {
     extensions: [".js", ".jsx"],
   },
   devServer: {
-    static: "./public",
+    static: {
+      directory: path.join(__dirname, 'public'),
+    },
     hot: true,
     port: 3000,
     historyApiFallback: true,
@@ -76,5 +79,5 @@ module.exports = {
   stats: {
     warnings: false,
   },
-  mode: "development",
+  mode: "production",
 };

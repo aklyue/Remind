@@ -60,7 +60,7 @@ function Layout() {
               }
             />
             <Route
-              path="/users/:userId"
+              path="/profile/:userId"
               element={
                 <>
                   <Header />

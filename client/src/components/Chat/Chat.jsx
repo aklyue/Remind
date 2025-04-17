@@ -14,8 +14,14 @@ function Chat() {
   const userId = localStorage.getItem("userId");
 
   const [recipientId, setRecipientId] = useState(
-    location.state.recipient.id
+    location?.state?.recipient?.id || userId
   );
+
+  useEffect(() => {
+    if(!location.state?.recipient){
+      navigate("/chat")
+    }
+  }, [location.state, navigate])
 
   const [groupId, setGroupId] = useState(location?.state?.room?.id || null);
   const [isUserSelected, setIsUserSelected] = useState(false);

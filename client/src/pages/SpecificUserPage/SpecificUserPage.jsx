@@ -26,7 +26,7 @@ function SpecificUserPage() {
     };
 
     fetchCurrentUser();
-  }, [currentUserId]);
+  }, [currentUserId, navigate]);
 
   useEffect(() => {
     if (user?.followers?.some((follower) => follower.id === currentUserId)) {
@@ -103,8 +103,23 @@ function SpecificUserPage() {
     }
   };
 
+  const isVideo = (url) => {
+    const videoExtensions = [
+      "mp4",
+      "webm",
+      "ogg",
+      "mov",
+      "MP4",
+      "WEBM",
+      "OGG",
+      "MOV",
+    ];
+    const fileExtension = url.split(".").pop();
+    return videoExtensions.includes(fileExtension);
+  };
+
   const handleUserNavigate = (follower) => {
-    navigate(`/users/${follower.id}`);
+    navigate(`/profile/${follower.id}`);
   };
 
   return (
@@ -138,9 +153,7 @@ function SpecificUserPage() {
                   </li>
                 ))}
                 {user.followers.length > 3 && (
-                  <button
-                    onClick={() => setShowAllFollowers(true)}
-                  >
+                  <button onClick={() => setShowAllFollowers(true)}>
                     Show all ({user.followers.length})
                   </button>
                 )}
@@ -156,43 +169,48 @@ function SpecificUserPage() {
           {user.posts && user.posts.length > 0 ? (
             <ul className={c.postList}>
               {user.posts.map((post) => (
-                <li key={post.id} className={c.postItem}>
-                  <h3 className={c.postTitle}>{post.title}</h3>
-
-                  <div
-                    className={`${c.postImagesContainer} ${
-                      post.image || post.images?.length === 1
-                        ? c.single
-                        : post.images?.length === 2
-                        ? c.double
-                        : post.images?.length > 2
-                        ? c.multiple
-                        : ""
-                    }`}
-                    style={{ "--span-count": post.images?.length || 1 }}
-                  >
-                    {post.images?.length > 0 ? (
-                      post.images.map((image, index) => (
-                        <img
+                <Link to={`/posts/${post.id}`}>
+                  <div className={c.postItem}>
+                    <div
+                      className={`${c.postImageContainer} ${
+                        post.images?.urls?.length === 1
+                          ? c.single
+                          : post.images?.urls?.length === 2
+                          ? c.double
+                          : c.multiple
+                      }`}
+                      data-no-navigate
+                    >
+                      {post.images?.urls?.map((url, index) => (
+                        <div
                           key={index}
-                          className={c.postImage}
-                          src={image}
-                          alt={`Post ${index}`}
-                        />
-                      ))
-                    ) : post.image ? (
-                      <img
-                        src={post.image}
-                        className={c.postImage}
-                        alt={post.title}
-                      />
-                    ) : (
-                      <div></div>
-                    )}
+                          style={{
+                            "--span-count": post.images.urls.length,
+                          }}
+                        >
+                          {isVideo(url) ? (
+                            <video
+                              className={c.postMedia}
+                              src={url}
+                              alt={`Post video ${index}`}
+                              controls
+                              onClick={() => openImage(url)}
+                            />
+                          ) : (
+                            <img
+                              className={c.postMedia}
+                              src={url}
+                              alt={`Post ${index}`}
+                              onClick={() => openImage(url)}
+                            />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <h3>{post.title}</h3>
+                    <p>{post.text}</p>
                   </div>
-
-                  <p className={c.postText}>{post.text}</p>
-                </li>
+                </Link>
               ))}
             </ul>
           ) : (
@@ -201,9 +219,7 @@ function SpecificUserPage() {
         </div>
 
         {showAllFollowers && (
-          <div
-            onClick={() => setShowAllFollowers(false)}
-          >
+          <div onClick={() => setShowAllFollowers(false)}>
             <div onClick={(e) => e.stopPropagation()}>
               <h3>All Followers</h3>
               <ul className={c.fullFollowersList}>
@@ -218,11 +234,7 @@ function SpecificUserPage() {
                   </li>
                 ))}
               </ul>
-              <button
-                onClick={() => setShowAllFollowers(false)}
-              >
-                Close
-              </button>
+              <button onClick={() => setShowAllFollowers(false)}>Close</button>
             </div>
           </div>
         )}

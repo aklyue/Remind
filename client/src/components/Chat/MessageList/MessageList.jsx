@@ -89,7 +89,7 @@ export default function MessageList({
               className={msg.senderId === userId ? c.myMessage : c.otherMessage}
             >
               <div>
-                <Link className={msg.senderId === userId ? c.myUsername : c.otherUsername} to={`/users/${msg.senderId}`}>
+                <Link className={msg.senderId === userId ? c.myUsername : c.otherUsername} to={`/profile/${msg.senderId}`}>
                   <span>{msg.username || "Аноним"}</span>
                 </Link>
               </div>
