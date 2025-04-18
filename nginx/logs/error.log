@@ -150,3 +150,24 @@
 2025/04/17 17:19:30 [error] 11428#16472: *12 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
 2025/04/17 17:19:46 [notice] 15864#15412: signal process started
 2025/04/17 17:59:10 [notice] 15000#892: signal process started
+2025/04/18 18:13:34 [emerg] 7980#3312: host not found in upstream "backend" in C:\PROJECTSS\remind\nginx/conf/nginx.conf:22
+2025/04/18 18:15:16 [emerg] 1644#2576: host not found in upstream "backend" in C:\PROJECTSS\remind\nginx/conf/nginx.conf:22
+2025/04/18 18:15:44 [error] 7360#9684: *1 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2025/04/18 18:15:44 [error] 7360#9684: *2 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
+2025/04/18 18:15:53 [error] 7360#9684: *3 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2025/04/18 18:16:10 [notice] 18140#6992: signal process started
+2025/04/18 18:16:13 [error] 14200#12088: *4 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2025/04/18 18:16:26 [notice] 14764#9300: signal process started
+2025/04/18 18:17:18 [error] 14800#14112: *1 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2025/04/18 18:18:29 [notice] 5896#16612: signal process started
+2025/04/18 18:18:31 [error] 15452#3112: *2 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2025/04/18 18:18:32 [error] 15452#3112: *3 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2025/04/18 18:18:49 [notice] 7508#6592: signal process started
+2025/04/18 18:19:26 [error] 4360#16784: *1 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2025/04/18 18:19:35 [error] 4360#16784: *2 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2025/04/18 18:21:25 [notice] 12720#10820: signal process started
+2025/04/18 18:21:27 [error] 1644#15372: *3 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2025/04/18 18:21:28 [error] 1644#15372: *4 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2025/04/18 18:22:03 [error] 3472#15388: *1 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2025/04/18 18:24:43 [notice] 9016#1912: signal process started
+2025/04/18 21:35:19 [emerg] 11020#16192: host not found in upstream "backend" in C:\PROJECTSS\remind\nginx/conf/nginx.conf:21

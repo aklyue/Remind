@@ -4,3 +4,4 @@ server/node_modules/
 /server/.env
 /client/dist
 /server/db_data
+.env

@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     else if (type === "messages")
       uploadPath = path.join(uploadPath, "messages");
     else if (type === "avatars") uploadPath = path.join(uploadPath, "avatars");
-
+    console.log(`Saving to: ${uploadPath}`);
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
