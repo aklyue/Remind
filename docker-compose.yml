@@ -1,11 +1,4 @@
 services:
-  frontend:
-    build:
-      context: ./client
-    volumes:
-      - ./client/dist:/usr/share/nginx/html
-    ports:
-      - "8080:80"
 
   backend:
     build:
@@ -16,27 +9,41 @@ services:
       - "4000:4000"
       - "5000:5000"
     depends_on:
-      - postgres
+      - db
     restart: always
+    volumes:
+      - ./server/uploads:/app/uploads
+    networks:
+      - remind
 
-  postgres:
-    image: postgres:alpine
+  db:
+    image: postgres:17
+    container_name: postgres
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
       POSTGRES_DB: ${DB_NAME}
     volumes:
       - ./server/db_data:/var/lib/postgresql/data
+      - ./server/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
+    networks:
+      - remind
 
   nginx:
     build:
-      context: ./nginx
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
-      - frontend
       - backend
     volumes:
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - remind
+
+networks:
+  remind:
+    driver: bridge

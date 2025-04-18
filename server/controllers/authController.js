@@ -18,7 +18,7 @@ exports.register = async (req, res) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const defaultAvatar = "https://avatars.akamai.steamstatic.com/...";
+  const defaultAvatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW534s-jmV52ZC0b0fOUMItdLmnHsBkCbJjw&s";
 
   const result = await pool.query(
     `INSERT INTO users (username, email, password, avatar, description, followers, followed, friends, posts, messages)
