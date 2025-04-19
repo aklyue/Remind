@@ -26,7 +26,7 @@ function Authorization() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/users");
+        const response = await fetch("https://amused-appreciation-production.up.railway.app/users");
         const data = await response.json();
         setUsers(data);
       } catch (error) {
@@ -42,7 +42,7 @@ function Authorization() {
 
     if (formValid) {
       try {
-        const response = await fetch("http://localhost:4000/login", {
+        const response = await fetch("https://amused-appreciation-production.up.railway.app/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),

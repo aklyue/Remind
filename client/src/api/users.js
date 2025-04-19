@@ -1,4 +1,4 @@
-const endPoint = "http://localhost:4000";
+const endPoint = "https://amused-appreciation-production.up.railway.app";
 
 export const getUsers = async () => {
   const token = localStorage.getItem("token");
