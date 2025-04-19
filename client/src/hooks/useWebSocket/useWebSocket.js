@@ -8,7 +8,7 @@ export default function useWebSocket(userId, groupId) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket.current = new WebSocket("wss://amused-appreciation-production.up.railway.app");
+    socket.current = new WebSocket("http://localhost:5000");
 
     socket.current.onopen = () => {
       socket.current.send(JSON.stringify({ event: "connection", id: userId }));

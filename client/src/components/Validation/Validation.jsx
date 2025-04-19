@@ -22,7 +22,7 @@ function Validation() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://amused-appreciation-production.up.railway.app/users");
+        const response = await fetch("http://localhost:4000/users");
         const data = await response.json();
         setUsers(data);
       } catch (error) {
@@ -56,7 +56,7 @@ function Validation() {
     if (!formValid) return;
 
     try {
-      const response = await fetch("https://amused-appreciation-production.up.railway.app/register", {
+      const response = await fetch("http://localhost:4000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
