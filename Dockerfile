@@ -1,7 +1,7 @@
 FROM node:22 AS build
 
 WORKDIR /app
-COPY client ./client
+COPY client/ /app/client/
 WORKDIR /app/client
 RUN npm install && npm run build
 
