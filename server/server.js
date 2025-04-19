@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 app.use(cors({
-  origin: "https://amused-appreciation-production.up.railway.app",
+  origin: ["https://amused-appreciation-production.up.railway.app", "http://localhost:4000"],
   credentials: true
 }));
 app.use(express.json({ limit: "50mb" }));
