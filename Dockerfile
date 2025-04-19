@@ -18,5 +18,9 @@ COPY --from=backend /app/server /app/server
 
 RUN apk add --no-cache nodejs npm && npm install pm2 -g
 
+WORKDIR /app/server
+
 EXPOSE 80
-CMD pm2 start /app/server/server.js && nginx -g "daemon off;"
+
+CMD pm2 start server.js --name backend && nginx -g "daemon off;"
+
