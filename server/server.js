@@ -11,7 +11,7 @@ const { setupWebSocket } = require("./utils/websocket");
 dotenv.config();
 
 const app = express();
-const { PORT } = process.env || 4000;
+const PORT = process.env.PORT || 4000;
 app.use(cors({
   origin: "https://amused-appreciation-production.up.railway.app",
   credentials: true
