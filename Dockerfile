@@ -1,10 +1,22 @@
-FROM node:22 AS build
-
-WORKDIR /app
-COPY client/ /app/client/
+FROM node:22 AS frontend
 WORKDIR /app/client
+COPY client ./ 
 RUN npm install && npm run build
 
+FROM node:22 AS backend
+WORKDIR /app/server
+COPY server ./
+RUN npm install
+
 FROM nginx:alpine
-COPY --from=build /app/client/dist /usr/share/nginx/html
+
+COPY --from=frontend /app/client/dist /usr/share/nginx/html
+
 COPY nginx/conf/nginx.conf /etc/nginx/nginx.conf
+
+COPY --from=backend /app/server /app/server
+
+RUN apk add --no-cache nodejs npm && npm install pm2 -g
+
+EXPOSE 80
+CMD pm2 start /app/server/server.js && nginx -g "daemon off;"
