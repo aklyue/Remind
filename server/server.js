@@ -11,7 +11,7 @@ const { setupWebSocket } = require("./utils/websocket");
 dotenv.config();
 
 const app = express();
-const { PORT } = process.env;
+const { PORT } = process.env || 4000;
 
 app.use(cors({ origin: ["http://localhost", "http://localhost:8080", "http://localhost:4000"], credentials: true }));
 app.use(express.json({ limit: "50mb" }));
