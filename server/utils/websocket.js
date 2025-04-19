@@ -1,5 +1,5 @@
 const WebSocket = require("ws");
-const { WS_PORT } = process.env || 5000;
+const WS_PORT = process.env.WS_PORT || 5000;
 
 let clients = new Map();
 let rooms = new Map();
